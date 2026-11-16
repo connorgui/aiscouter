@@ -1,0 +1,15 @@
+{
+  "name": "ai-matchmaker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Scouter finds and compares the right AI tool for the task at hand.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node scripts/validate.mjs",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

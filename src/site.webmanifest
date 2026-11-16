@@ -1,0 +1,16 @@
+{
+  "name": "AI Scouter",
+  "short_name": "AI Scouter",
+  "description": "Find the right AI for the task in front of you.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f1e9",
+  "theme_color": "#11110f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
