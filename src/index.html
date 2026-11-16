@@ -15,11 +15,12 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script>
       (() => {
-        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#fbfcf8" };
+        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5" };
         let preferences = defaults;
         try {
           const stored = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
           preferences = { ...defaults, ...stored };
+          if (String(preferences.folioLightBackground).toLowerCase() === "#fbfcf8") preferences.folioLightBackground = defaults.folioLightBackground;
           if (preferences.palette === "folio-scouter") preferences.palette = "folio";
           if (!("layout" in stored)) preferences.layout = stored.palette === "folio" ? "split" : "catalog";
         } catch {}
@@ -83,8 +84,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261116b" />
-    <script src="/app.js?v=20261116b" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261116c" />
+    <script src="/app.js?v=20261116c" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>

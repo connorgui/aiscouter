@@ -324,13 +324,14 @@ let activeFolioFilter = "all";
 let selectedFolioToolId = "chatgpt";
 let savedToolIds = new Set(JSON.parse(localStorage.getItem("ai-scouter-saved") || "[]"));
 let comparedToolIds = ["chatgpt", "claude"];
-const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#fbfcf8" };
+const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5" };
 let appearancePreferences = { ...appearanceDefaults };
 const isFolioPalette = (palette) => palette === "folio";
 
 try {
   const storedPreferences = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
   appearancePreferences = { ...appearanceDefaults, ...storedPreferences };
+  if (String(appearancePreferences.folioLightBackground).toLowerCase() === "#fbfcf8") appearancePreferences.folioLightBackground = appearanceDefaults.folioLightBackground;
   if (appearancePreferences.palette === "folio-scouter") appearancePreferences.palette = "folio";
   if (!("layout" in storedPreferences)) appearancePreferences.layout = isFolioPalette(storedPreferences.palette) ? "split" : "catalog";
 } catch {
