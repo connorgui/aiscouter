@@ -77,14 +77,14 @@
           root.style.setProperty("--ink", ink);
           root.style.setProperty("--text", ensure(ensure(mix(ink, background, .88), background, 4.5), surface, 4.5));
           root.style.setProperty("--muted", ensure(ensure(mix(ink, background, .62), background, 4.5), surface, 4.5));
-          root.style.setProperty("--line", mix(ink, surface, dark ? .14 : .08));
-          root.style.setProperty("--line-strong", mix(ink, surface, dark ? .22 : .14));
+          root.style.setProperty("--line", mix(primary, surface, dark ? .20 : .16));
+          root.style.setProperty("--line-strong", mix(primary, surface, dark ? .30 : .22));
         }
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261116a" />
-    <script src="/app.js?v=20261116a" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261116b" />
+    <script src="/app.js?v=20261116b" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>

@@ -795,8 +795,8 @@ function applyFolioColors(root, effectiveMode) {
   root.style.setProperty("--ink", ink);
   root.style.setProperty("--text", text);
   root.style.setProperty("--muted", muted);
-  root.style.setProperty("--line", mixHex(ink, surface, effectiveMode === "dark" ? 0.14 : 0.08));
-  root.style.setProperty("--line-strong", mixHex(ink, surface, effectiveMode === "dark" ? 0.22 : 0.14));
+  root.style.setProperty("--line", mixHex(primary, surface, effectiveMode === "dark" ? 0.20 : 0.16));
+  root.style.setProperty("--line-strong", mixHex(primary, surface, effectiveMode === "dark" ? 0.30 : 0.22));
 }
 
 function syncSettingsControls() {
