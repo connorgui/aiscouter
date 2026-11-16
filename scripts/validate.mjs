@@ -19,10 +19,10 @@ const assertions = [
   [html.includes('data-page="settings"'), "settings page is present"],
   [html.includes('data-page="advanced"'), "advanced workflow page is present"],
   [html.includes('id="folio-dashboard"'), "fixed Folio dashboard is present"],
-  [html.includes('styles.css?v=20261115t'), "versioned stylesheet is present"],
+  [html.includes('styles.css?v=20261116a'), "versioned stylesheet is present"],
   [html.includes('id="folio-background"'), "Folio background control is present"],
   [html.includes('data-reset-setting="folioAccent"'), "individual setting resets are present"],
-  [html.includes('localStorage.getItem("ai-scouter-preferences")') && html.indexOf('localStorage.getItem("ai-scouter-preferences")') < html.indexOf('styles.css?v=20261115t'), "saved appearance is applied before the stylesheet can paint"],
+  [html.includes('localStorage.getItem("ai-scouter-preferences")') && html.indexOf('localStorage.getItem("ai-scouter-preferences")') < html.indexOf('styles.css?v=20261116a'), "saved appearance is applied before the stylesheet can paint"],
   [html.includes('data-palette-option="folio"') && html.includes('<small>Folio Scouter</small>'), "AI-adapted Folio Scouter theme is available"],
   [html.includes('id="layout-grid"') && html.includes('data-layout-option="split"') && html.includes('data-layout-option="compact"'), "independent layout options are present"],
   [html.includes('id="hover-info-toggle"') && html.includes('data-reset-setting="moreInfo"'), "hover information preference is present and resettable"],
@@ -41,6 +41,8 @@ const assertions = [
   [css.includes("grid-auto-flow:dense") && css.includes("grid-auto-rows:1px") && css.includes("--directory-gap"), "expanded cards use an in-flow masonry layout"],
   [css.includes("Matcher transparency contract") && css.includes(".matcher-card{background:transparent;border-color:transparent}"), "matcher container stays transparent across themes"],
   [css.includes("Folio color-personalization contract"), "shared Folio components inherit adaptive colors"],
+  [css.includes('.folio-panel-drag') && css.includes('cursor:col-resize'), "Folio panels provide a visible resize handle"],
+  [css.includes('.folio-tool-row.active') && css.includes('box-shadow:inset 3px 0 0 var(--primary)'), "Folio selection uses a clear sage state"],
   [css.includes('[class*="-status"]') && css.includes('[class*="-count"]') && css.includes('[class*="-card"]'), "new semantic components inherit corner personalization"],
   [css.includes('data-theme="light"'), "Folio light-mode styling is present"],
   [css.includes('data-palette="deploy"'), "Deploy theme is present"],
@@ -59,6 +61,7 @@ const assertions = [
   [js.includes("Fixed · 6–13 px"), "Folio settings describe the fixed radius scale accurately"],
   [js.includes("ensureColorContrast") && js.includes("colorContrast"), "custom Folio colors enforce readable contrast"],
   [js.includes("createBlueprint"), "advanced blueprint builder is present"],
+  [js.includes("updateFolioPanelWidth") && js.includes('addEventListener("pointermove"'), "Folio panel divider supports pointer and keyboard resizing"],
   [js.includes("renderFolioDashboard"), "Folio dashboard behavior is present"]
 ];
 

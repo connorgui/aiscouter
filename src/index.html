@@ -77,14 +77,14 @@
           root.style.setProperty("--ink", ink);
           root.style.setProperty("--text", ensure(ensure(mix(ink, background, .88), background, 4.5), surface, 4.5));
           root.style.setProperty("--muted", ensure(ensure(mix(ink, background, .62), background, 4.5), surface, 4.5));
-          root.style.setProperty("--line", mix(ink, surface, .2));
-          root.style.setProperty("--line-strong", mix(ink, surface, .34));
+          root.style.setProperty("--line", mix(ink, surface, dark ? .14 : .08));
+          root.style.setProperty("--line-strong", mix(ink, surface, dark ? .22 : .14));
         }
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261115t" />
-    <script src="/app.js?v=20261115t" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261116a" />
+    <script src="/app.js?v=20261116a" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -151,6 +151,7 @@
             <div class="folio-panels" id="folio-panels">
               <section class="folio-list-panel"><header><span>⠿</span><b>AI tools</b><small>SELECT A TOOL</small></header><div id="folio-tool-list"></div></section>
               <section class="folio-detail-panel" id="folio-tool-detail" aria-live="polite"></section>
+              <button class="folio-panel-drag" id="folio-panel-drag" type="button" aria-label="Drag to resize the tool list and profile panels" aria-valuemin="28" aria-valuemax="48" aria-valuenow="34" title="Drag to resize panels"><span aria-hidden="true"></span></button>
             </div>
           </section>
           <section class="page-hero" id="top" aria-labelledby="page-title">

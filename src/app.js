@@ -316,6 +316,7 @@ const folioCount = document.querySelector("#folio-count");
 const folioPanels = document.querySelector("#folio-panels");
 const folioPanelRange = document.querySelector("#folio-panel-range");
 const folioPanelValue = document.querySelector("#folio-panel-value");
+const folioPanelDrag = document.querySelector("#folio-panel-drag");
 const folioModeToggle = document.querySelector("#folio-mode-toggle");
 const systemColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
 let activeDirectoryFilter = "all";
@@ -794,8 +795,8 @@ function applyFolioColors(root, effectiveMode) {
   root.style.setProperty("--ink", ink);
   root.style.setProperty("--text", text);
   root.style.setProperty("--muted", muted);
-  root.style.setProperty("--line", mixHex(ink, surface, 0.2));
-  root.style.setProperty("--line-strong", mixHex(ink, surface, 0.34));
+  root.style.setProperty("--line", mixHex(ink, surface, effectiveMode === "dark" ? 0.14 : 0.08));
+  root.style.setProperty("--line-strong", mixHex(ink, surface, effectiveMode === "dark" ? 0.22 : 0.14));
 }
 
 function syncSettingsControls() {
@@ -1167,9 +1168,40 @@ folioToolDetail.addEventListener("click", (event) => {
   if (saveButton) toggleSavedTool(saveButton.dataset.save);
 });
 
-folioPanelRange.addEventListener("input", () => {
-  folioPanels.style.setProperty("--folio-list", `${folioPanelRange.value}%`);
-  folioPanelValue.textContent = `${folioPanelRange.value}%`;
+function updateFolioPanelWidth(value) {
+  const width = Math.min(48, Math.max(28, Math.round(Number(value))));
+  folioPanels.style.setProperty("--folio-list", `${width}%`);
+  folioPanelRange.value = String(width);
+  folioPanelValue.textContent = `${width}%`;
+  folioPanelDrag.setAttribute("aria-valuenow", String(width));
+}
+
+folioPanelRange.addEventListener("input", () => updateFolioPanelWidth(folioPanelRange.value));
+
+let folioPanelDragging = false;
+folioPanelDrag.addEventListener("pointerdown", (event) => {
+  folioPanelDragging = true;
+  folioPanelDrag.classList.add("dragging");
+  folioPanelDrag.setPointerCapture(event.pointerId);
+});
+folioPanelDrag.addEventListener("pointermove", (event) => {
+  if (!folioPanelDragging) return;
+  const bounds = folioPanels.getBoundingClientRect();
+  const fromLeft = (event.clientX - bounds.left) / bounds.width;
+  const listShare = folioPanels.classList.contains("panels-swapped") ? 1 - fromLeft : fromLeft;
+  updateFolioPanelWidth(listShare * 100);
+});
+const stopFolioPanelDrag = () => {
+  folioPanelDragging = false;
+  folioPanelDrag.classList.remove("dragging");
+};
+folioPanelDrag.addEventListener("pointerup", stopFolioPanelDrag);
+folioPanelDrag.addEventListener("pointercancel", stopFolioPanelDrag);
+folioPanelDrag.addEventListener("keydown", (event) => {
+  if (!["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp"].includes(event.key)) return;
+  event.preventDefault();
+  const increase = event.key === "ArrowRight" || event.key === "ArrowUp";
+  updateFolioPanelWidth(Number(folioPanelRange.value) + (increase ? 1 : -1));
 });
 
 document.querySelector("#folio-swap").addEventListener("click", () => {
@@ -1177,9 +1209,7 @@ document.querySelector("#folio-swap").addEventListener("click", () => {
 });
 
 document.querySelector("#folio-reset").addEventListener("click", () => {
-  folioPanelRange.value = "34";
-  folioPanelValue.textContent = "34%";
-  folioPanels.style.setProperty("--folio-list", "34%");
+  updateFolioPanelWidth(34);
   folioPanels.classList.remove("panels-swapped");
 });
 
