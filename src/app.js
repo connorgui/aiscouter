@@ -318,6 +318,11 @@ const folioPanelRange = document.querySelector("#folio-panel-range");
 const folioPanelValue = document.querySelector("#folio-panel-value");
 const folioPanelDrag = document.querySelector("#folio-panel-drag");
 const folioModeToggle = document.querySelector("#folio-mode-toggle");
+const atlasVisibleCount = document.querySelector("#atlas-visible-count");
+const atlasCoverageLabel = document.querySelector("#atlas-coverage-label");
+const atlasActiveTool = document.querySelector("#atlas-active-tool");
+const atlasActiveType = document.querySelector("#atlas-active-type");
+const atlasSavedCount = document.querySelector("#atlas-saved-count");
 const systemColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
 let activeDirectoryFilter = "all";
 let activeFolioFilter = "all";
@@ -590,6 +595,11 @@ function renderFolioDashboard() {
     </button>`).join("") : `<div class="folio-no-results"><b>No matching tools</b><span>Try a broader task or another category.</span></div>`;
 
   const tool = tools.find((item) => item.id === selectedFolioToolId);
+  atlasVisibleCount.textContent = String(visibleTools.length);
+  atlasCoverageLabel.textContent = `${Math.round((visibleTools.length / tools.length) * 100)}% currently visible`;
+  atlasSavedCount.textContent = String(savedToolIds.size);
+  atlasActiveTool.textContent = tool?.name || "No match";
+  atlasActiveType.textContent = tool?.type || "Adjust the search criteria";
   if (!tool) {
     folioToolDetail.innerHTML = `<div class="folio-no-selection">Select a tool to inspect it.</div>`;
     return;
@@ -1113,6 +1123,7 @@ document.querySelector("#theme-grid").addEventListener("click", (event) => {
   const button = event.target.closest("[data-palette-option]");
   if (!button) return;
   appearancePreferences.palette = button.dataset.paletteOption;
+  if (appearancePreferences.palette === "atlas") appearancePreferences.layout = "split";
   applyAppearance();
 });
 
