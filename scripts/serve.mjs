@@ -12,6 +12,11 @@ const types = {
   ".svg": "image/svg+xml",
   ".webmanifest": "application/manifest+json"
 };
+const securityHeaders = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+};
 
 const server = createServer(async (request, response) => {
   const url = new URL(request.url || "/", "http://localhost");
@@ -25,11 +30,15 @@ const server = createServer(async (request, response) => {
     response.writeHead(200, {
       "Content-Type": types[extname(filePath)] || "application/octet-stream",
       "Cache-Control": "no-store, max-age=0",
-      "Pragma": "no-cache"
+      "Pragma": "no-cache",
+      ...securityHeaders
     });
     createReadStream(filePath).pipe(response);
   } catch {
-    response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+    response.writeHead(404, {
+      "Content-Type": "text/plain; charset=utf-8",
+      ...securityHeaders
+    });
     response.end("Not found");
   }
 });
@@ -45,6 +54,8 @@ server.on("error", (error) => {
   process.exit(1);
 });
 
-server.listen(port, "127.0.0.1", () => {
+const host = process.env.HOST || "0.0.0.0";
+
+server.listen(port, host, () => {
   console.log(`AI Scouter is running at http://localhost:${port}`);
 });
