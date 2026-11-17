@@ -71,6 +71,8 @@
           root.style.setProperty("--active-text", activeText);
           root.style.setProperty("--accent-text", contrast(primary));
           root.style.setProperty("--accent-shadow", `color-mix(in srgb, ${primary} 22%, transparent)`);
+          root.style.setProperty("--folio-focus", accent === "#afca7d" ? "#abbb9e" : mix(primary, surface, .55));
+          root.style.setProperty("--folio-dot", mix(accent, ink, .82));
           root.style.setProperty("--canvas", background);
           root.style.setProperty("--sidebar-bg", surface);
           root.style.setProperty("--surface", surface);
@@ -84,8 +86,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261116c" />
-    <script src="/app.js?v=20261116c" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261116f" />
+    <script src="/app.js?v=20261116f" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -132,15 +134,15 @@
           <section class="folio-dashboard" id="folio-dashboard" aria-label="AI Scouter Folio dashboard">
             <header class="folio-topbar">
               <div class="folio-crumb"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
-              <label class="folio-global-search"><span>⌕</span><input id="folio-search" type="search" placeholder="AI tool, task, or category" autocomplete="off" /><kbd>/</kbd></label>
-              <button type="button" data-go-page="advanced">Scouter / Lab</button>
+              <label class="folio-global-search"><span class="folio-search-icon" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><circle cx="8.5" cy="8.5" r="4.75"></circle><path d="m12.1 12.1 3.35 3.35"></path></svg></span><input id="folio-search" type="search" placeholder="AI tool, task, or category" autocomplete="off" /><kbd>/</kbd></label>
+              <button type="button" data-go-page="advanced">Simulator / Lab</button>
               <p><i></i> AI tools · choose your task <b>ⓘ</b></p>
               <button type="button" id="folio-mode-toggle">☾ <span>Dark mode</span></button>
               <button type="button" data-go-page="saved">✦ <span>Saved</span></button>
               <div class="folio-profile"><i>S</i><span><b>Local profile</b><small>Saved in this browser</small></span></div>
             </header>
             <div class="folio-intro">
-              <div><span>THE RIGHT AI. LESS GUESSWORK.</span><h1>Discover AI tools with a clearer view.</h1><p>Compare capabilities. Build a practical stack. Keep your judgment in the loop.</p></div>
+              <div><span>THE RIGHT AI. LESS GUESSWORK.</span><h1>Discover AI tools with a clearer view<span class="folio-dot">.</span></h1><p>Compare capabilities. Build a practical stack. Keep your judgment in the loop.</p></div>
               <aside><span>YOUR AI COMPASS</span><p>One task at a time ↗</p></aside>
             </div>
             <section class="folio-discovery">

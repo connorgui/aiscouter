@@ -767,7 +767,7 @@ function ensureColorContrast(color, background, minimum = 4.5) {
 const folioColorProperties = [
   "--primary", "--primary-dark", "--primary-soft", "--accent-text", "--accent-shadow",
   "--canvas", "--sidebar-bg", "--surface", "--surface-soft", "--ink", "--text", "--muted", "--line", "--line-strong",
-  "--active-surface", "--active-text"
+  "--active-surface", "--active-text", "--folio-focus", "--folio-dot"
 ];
 
 function applyFolioColors(root, effectiveMode) {
@@ -789,6 +789,8 @@ function applyFolioColors(root, effectiveMode) {
   root.style.setProperty("--active-text", activeText);
   root.style.setProperty("--accent-text", accentTextFor(primary));
   root.style.setProperty("--accent-shadow", `color-mix(in srgb, ${primary} 22%, transparent)`);
+  root.style.setProperty("--folio-focus", accent === "#afca7d" ? "#abbb9e" : mixHex(primary, surface, 0.55));
+  root.style.setProperty("--folio-dot", mixHex(accent, ink, 0.82));
   root.style.setProperty("--canvas", background);
   root.style.setProperty("--sidebar-bg", surface);
   root.style.setProperty("--surface", surface);
