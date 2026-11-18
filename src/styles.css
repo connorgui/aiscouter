@@ -367,8 +367,9 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   --glass-specular:rgb(255 255 255 / .78);
   --glass-edge:rgb(255 255 255 / .48);
   --glass-edge-dark:rgb(31 71 111 / .18);
-  --glass-shadow:0 20px 55px rgb(20 57 98 / .16),inset 0 1px 0 var(--glass-specular),inset 1px 0 0 rgb(255 255 255 / .34),inset 0 -1px 0 var(--glass-edge-dark);
-  --glass-shadow-soft:0 9px 25px rgb(20 57 98 / .11),inset 0 1px 0 rgb(255 255 255 / .68),inset 0 -1px 0 rgb(36 80 121 / .12);
+  --glass-rim:linear-gradient(145deg,rgb(255 255 255 / .94) 0%,rgb(255 255 255 / .4) 24%,color-mix(in srgb,var(--liquid-tint) 34%,rgb(255 255 255 / .26)) 62%,rgb(24 58 96 / .42) 100%);
+  --glass-shadow:0 22px 58px rgb(20 57 98 / .19),0 2px 5px rgb(17 48 83 / .12),inset 0 2px 2px rgb(255 255 255 / .62),inset 2px 0 3px rgb(255 255 255 / .28),inset 0 -2px 3px rgb(20 55 91 / .22),inset -2px 0 3px color-mix(in srgb,var(--liquid-tint) 18%,transparent);
+  --glass-shadow-soft:0 10px 28px rgb(20 57 98 / .14),0 1px 3px rgb(17 48 83 / .1),inset 0 2px 2px rgb(255 255 255 / .58),inset 1px 0 2px rgb(255 255 255 / .24),inset 0 -2px 2px rgb(36 80 121 / .17);
   --display-weight:650;
   --control-weight:600;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif;
@@ -385,6 +386,8 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   --sidebar-bg:rgb(232 246 255 / calc(var(--liquid-glass-alpha) + .08));
   --glass-control:rgb(250 253 255 / calc(var(--liquid-glass-alpha) + .16));
   --glass-control-active:rgb(255 255 255 / calc(var(--liquid-glass-alpha) + .28));
+  --glass-fill-top:rgb(255 255 255 / calc(var(--liquid-glass-alpha) + .16));
+  --glass-fill-bottom:rgb(218 237 251 / calc(var(--liquid-glass-alpha) + .02));
 }
 :root[data-palette="liquid"][data-theme="dark"]{
   --ink:#f5f9ff;
@@ -398,26 +401,29 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   --sidebar-bg:rgb(11 24 45 / calc(var(--liquid-glass-alpha) + .12));
   --glass-control:rgb(42 63 93 / calc(var(--liquid-glass-alpha) + .16));
   --glass-control-active:rgb(54 79 114 / calc(var(--liquid-glass-alpha) + .2));
+  --glass-fill-top:rgb(78 101 136 / calc(var(--liquid-glass-alpha) + .12));
+  --glass-fill-bottom:rgb(8 18 37 / calc(var(--liquid-glass-alpha) + .04));
   --glass-specular:rgb(255 255 255 / .33);
   --glass-edge:rgb(223 241 255 / .22);
   --glass-edge-dark:rgb(1 8 20 / .42);
-  --glass-shadow:0 24px 65px rgb(0 8 26 / .38),inset 0 1px 0 var(--glass-specular),inset 1px 0 0 rgb(255 255 255 / .13),inset 0 -1px 0 var(--glass-edge-dark);
-  --glass-shadow-soft:0 11px 30px rgb(0 8 26 / .27),inset 0 1px 0 rgb(255 255 255 / .25),inset 0 -1px 0 rgb(0 6 17 / .3);
+  --glass-rim:linear-gradient(145deg,rgb(255 255 255 / .48) 0%,rgb(255 255 255 / .13) 30%,color-mix(in srgb,var(--liquid-tint) 38%,rgb(255 255 255 / .12)) 62%,rgb(0 5 17 / .62) 100%);
+  --glass-shadow:0 25px 68px rgb(0 8 26 / .42),0 2px 5px rgb(0 5 17 / .3),inset 0 2px 2px rgb(255 255 255 / .3),inset 2px 0 3px rgb(255 255 255 / .13),inset 0 -2px 3px rgb(0 4 14 / .48),inset -2px 0 3px color-mix(in srgb,var(--liquid-tint) 18%,transparent);
+  --glass-shadow-soft:0 12px 32px rgb(0 8 26 / .31),0 1px 3px rgb(0 5 17 / .24),inset 0 2px 2px rgb(255 255 255 / .22),inset 1px 0 2px rgb(255 255 255 / .1),inset 0 -2px 2px rgb(0 6 17 / .38);
 }
-:root[data-palette="liquid"][data-liquid-background="aurora"]{--liquid-wallpaper:radial-gradient(circle at 12% 18%,rgb(176 236 255 / .95) 0 13%,transparent 34%),radial-gradient(circle at 85% 23%,rgb(161 132 248 / .88) 0 12%,transparent 36%),radial-gradient(circle at 53% 96%,rgb(36 101 228 / .9) 0 18%,transparent 48%),linear-gradient(138deg,#77cef3 0%,#8cc5ee 33%,#846edf 66%,#3f82dc 100%)}
+:root[data-palette="liquid"][data-liquid-background="aurora"]{--liquid-wallpaper:repeating-linear-gradient(0deg,transparent 0 94px,rgb(15 54 94 / .1) 95px 96px),repeating-linear-gradient(90deg,transparent 0 94px,rgb(15 54 94 / .1) 95px 96px),radial-gradient(circle at 12% 18%,rgb(176 236 255 / .95) 0 13%,transparent 34%),radial-gradient(circle at 85% 23%,rgb(161 132 248 / .88) 0 12%,transparent 36%),radial-gradient(circle at 53% 96%,rgb(36 101 228 / .9) 0 18%,transparent 48%),linear-gradient(138deg,#77cef3 0%,#8cc5ee 33%,#846edf 66%,#3f82dc 100%)}
 :root[data-palette="liquid"][data-liquid-background="coast"]{--liquid-wallpaper:radial-gradient(circle at 68% 5%,rgb(255 239 185 / .8) 0 12%,transparent 34%),linear-gradient(151deg,#b7e7f2 0 30%,#58b8d3 31% 48%,#2a6dbb 49% 64%,#173f87 65% 100%)}
 :root[data-palette="liquid"][data-liquid-background="orchid"]{--liquid-wallpaper:radial-gradient(circle at 18% 30%,rgb(255 202 231 / .92),transparent 35%),radial-gradient(circle at 85% 70%,rgb(125 220 255 / .82),transparent 38%),linear-gradient(135deg,#b783ef,#f4a8cf 44%,#6b9ee9 100%)}
 :root[data-palette="liquid"][data-liquid-background="midnight"]{--liquid-wallpaper:radial-gradient(circle at 20% 22%,#2d80d9 0 8%,transparent 33%),radial-gradient(circle at 78% 65%,#6d40c7 0 12%,transparent 38%),linear-gradient(145deg,#06152d 0%,#102d58 38%,#23164a 72%,#080d20 100%)}
 
-:root[data-palette="liquid"] body{position:relative;min-height:100vh;background:transparent;color:var(--ink)}
-:root[data-palette="liquid"] body::before{content:"";position:fixed;inset:-5vmax;z-index:-2;background-color:var(--canvas);background-image:var(--liquid-custom-background),var(--liquid-wallpaper);background-position:center;background-size:cover;filter:saturate(1.08);transform:scale(1.02)}
-:root[data-palette="liquid"] body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(125deg,rgb(255 255 255 / .13),transparent 33%,rgb(20 53 113 / .1) 72%,rgb(255 255 255 / .08));mix-blend-mode:soft-light}
-:root[data-palette="liquid"] .app-shell{isolation:isolate}
+:root[data-palette="liquid"] body{position:relative;min-height:100vh;background-color:var(--canvas);background-image:var(--liquid-custom-background),var(--liquid-wallpaper);background-position:center;background-size:cover;background-attachment:fixed;color:var(--ink)}
+:root[data-palette="liquid"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(125deg,rgb(255 255 255 / .12),transparent 33%,rgb(20 53 113 / .1) 72%,rgb(255 255 255 / .08));mix-blend-mode:soft-light}
+:root[data-palette="liquid"] body::after{display:none}
+:root[data-palette="liquid"] .app-shell{position:relative;isolation:auto;background:transparent}
 :root[data-palette="liquid"] .workspace{margin-left:240px}
 :root[data-palette="liquid"] main{width:min(1450px,calc(100% - 60px))}
 
-:root[data-palette="liquid"] :is(.sidebar,.mobile-header,.folio-topbar,.settings-card,.settings-preview,.directory-card,.primary-result,.alternative-card,.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article,.advanced-builder,.blueprint-panel,.compare-table-wrap,.empty-state,.update-list,.tool-dialog,.toast,.method-grid,.how-section,.folio-arrange,.folio-list-panel,.folio-detail-panel){border:1px solid var(--glass-edge);background-color:var(--surface);background-image:linear-gradient(145deg,rgb(255 255 255 / .22),transparent 34%,color-mix(in srgb,var(--liquid-tint) 8%,transparent));box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(var(--liquid-glass-blur)) saturate(165%);backdrop-filter:blur(var(--liquid-glass-blur)) saturate(165%)}
-:root[data-palette="liquid"] :is(.task-composer,.tool-search,.choice-grid label>span,.filter-button,.details-button,.copy-prompt,.folio-global-search,.folio-topbar>button,.folio-arrange button,.setting-reset,.reset-settings,.liquid-upload>span,.liquid-upload-actions>button,.dialog-close,.hero-status,.theme-label,.segmented-control,.preview-search,.directory-hover-panel){border:1px solid var(--glass-edge);background-color:var(--glass-control);color:var(--text);box-shadow:var(--glass-shadow-soft);-webkit-backdrop-filter:blur(calc(var(--liquid-glass-blur) * .72)) saturate(165%);backdrop-filter:blur(calc(var(--liquid-glass-blur) * .72)) saturate(165%)}
+:root[data-palette="liquid"] :is(.sidebar,.mobile-header,.folio-topbar,.settings-card,.settings-preview,.directory-card,.primary-result,.alternative-card,.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article,.advanced-builder,.blueprint-panel,.compare-table-wrap,.empty-state,.update-list,.tool-dialog,.toast,.method-grid,.how-section,.folio-arrange,.folio-list-panel,.folio-detail-panel){border:1px solid transparent;background:linear-gradient(145deg,var(--glass-fill-top),var(--glass-fill-bottom) 58%,color-mix(in srgb,var(--liquid-tint) 10%,var(--glass-fill-bottom))) padding-box,var(--glass-rim) border-box;box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(var(--liquid-glass-blur)) saturate(185%) contrast(1.12) brightness(1.04);backdrop-filter:blur(var(--liquid-glass-blur)) saturate(185%) contrast(1.12) brightness(1.04)}
+:root[data-palette="liquid"] :is(.task-composer,.tool-search,.choice-grid label>span,.filter-button,.details-button,.copy-prompt,.folio-global-search,.folio-topbar>button,.folio-arrange button,.setting-reset,.reset-settings,.liquid-upload>span,.liquid-upload-actions>button,.dialog-close,.hero-status,.theme-label,.segmented-control,.preview-search,.directory-hover-panel){border:1px solid transparent;background:linear-gradient(145deg,color-mix(in srgb,var(--glass-control-active) 72%,transparent),var(--glass-control) 62%,color-mix(in srgb,var(--liquid-tint) 12%,var(--glass-control))) padding-box,var(--glass-rim) border-box;color:var(--text);box-shadow:var(--glass-shadow-soft);-webkit-backdrop-filter:blur(calc(var(--liquid-glass-blur) * .72)) saturate(190%) contrast(1.1) brightness(1.05);backdrop-filter:blur(calc(var(--liquid-glass-blur) * .72)) saturate(190%) contrast(1.1) brightness(1.05)}
 
 :root[data-palette="liquid"] .sidebar{inset:10px auto 10px 10px;width:214px;padding:13px 11px;overflow:hidden;border-radius:calc(var(--radius-component) + 12px);background-color:var(--sidebar-bg)}
 :root[data-palette="liquid"] .sidebar::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(112deg,rgb(255 255 255 / .24),transparent 36%,color-mix(in srgb,var(--liquid-tint) 10%,transparent))}
@@ -442,6 +448,11 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
 :root[data-palette="liquid"] .folio-topbar>button{border-radius:999px;background-image:linear-gradient(150deg,rgb(255 255 255 / .2),transparent)}
 :root[data-palette="liquid"] .folio-topbar>button:hover{border-color:color-mix(in srgb,var(--liquid-tint) 55%,white);background-color:var(--glass-control-active)}
 :root[data-palette="liquid"] .folio-profile>i{border:1px solid var(--glass-edge);background:color-mix(in srgb,var(--liquid-tint) 18%,var(--glass-control));box-shadow:inset 0 1px rgb(255 255 255 / .45)}
+
+:root[data-palette="liquid"] .page-hero{position:relative}
+:root[data-palette="liquid"] .page-hero>*{position:relative;z-index:1}
+:root[data-palette="liquid"] .page-hero::before{content:"";position:absolute;right:4%;top:18px;width:225px;height:82px;z-index:0;border:1px solid transparent;border-radius:46% 54% 48% 52% / 58% 44% 56% 42%;background:linear-gradient(145deg,rgb(255 255 255 / .32),rgb(255 255 255 / .06) 46%,color-mix(in srgb,var(--liquid-tint) 16%,transparent)) padding-box,var(--glass-rim) border-box;box-shadow:0 16px 40px rgb(17 48 83 / .14),inset 0 3px 4px rgb(255 255 255 / .7),inset 3px 0 5px rgb(255 255 255 / .28),inset 0 -3px 5px rgb(16 48 84 / .27),inset -3px 0 5px color-mix(in srgb,var(--liquid-tint) 22%,transparent);-webkit-backdrop-filter:blur(5px) saturate(190%) contrast(1.16) brightness(1.06);backdrop-filter:blur(5px) saturate(190%) contrast(1.16) brightness(1.06);transform:rotate(-2deg);pointer-events:none}
+:root[data-palette="liquid"] .page-hero::after{content:"";position:absolute;right:1.5%;top:31px;width:62px;height:58px;z-index:0;border:1px solid transparent;border-radius:50%;background:linear-gradient(145deg,rgb(255 255 255 / .27),rgb(255 255 255 / .035) 56%,color-mix(in srgb,var(--liquid-tint) 18%,transparent)) padding-box,var(--glass-rim) border-box;box-shadow:0 12px 28px rgb(17 48 83 / .12),inset 0 2px 3px rgb(255 255 255 / .7),inset 0 -2px 4px rgb(16 48 84 / .25);-webkit-backdrop-filter:blur(4px) saturate(190%) contrast(1.18);backdrop-filter:blur(4px) saturate(190%) contrast(1.18);pointer-events:none}
 
 :root[data-palette="liquid"] :is(.settings-card,.settings-preview,.directory-card,.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article,.advanced-builder,.blueprint-panel,.alternative-card,.primary-result,.how-section,.method-grid){border-radius:calc(var(--radius-component) + 8px)}
 :root[data-palette="liquid"] :is(.folio-list-panel,.folio-detail-panel){border-radius:calc(var(--radius-component) + 5px)}
@@ -496,5 +507,5 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
 
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root[data-palette="liquid"]{--liquid-glass-alpha:.88}}
 @media(max-width:1100px){:root[data-palette="liquid"] .workspace{margin-left:234px}.liquid-setting-row{grid-template-columns:1fr}.liquid-setting-row>.setting-reset{justify-self:start}.liquid-background-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:800px){:root[data-palette="liquid"] .workspace{margin-left:0}:root[data-palette="liquid"] main{width:min(100% - 28px,1450px)}:root[data-palette="liquid"] .sidebar{inset:8px auto 8px 8px;width:min(284px,calc(100vw - 16px))}:root[data-palette="liquid"] .folio-topbar{top:6px}.liquid-setting-row{grid-template-columns:1fr}.liquid-upload-actions{flex-wrap:wrap}}
+@media(max-width:800px){:root[data-palette="liquid"] .workspace{margin-left:0}:root[data-palette="liquid"] main{width:min(100% - 28px,1450px)}:root[data-palette="liquid"] .sidebar{inset:8px auto 8px 8px;width:min(284px,calc(100vw - 16px))}:root[data-palette="liquid"] .folio-topbar{top:6px}:root[data-palette="liquid"] .page-hero::before,:root[data-palette="liquid"] .page-hero::after{display:none}.liquid-setting-row{grid-template-columns:1fr}.liquid-upload-actions{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){:root[data-palette="liquid"] *{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
