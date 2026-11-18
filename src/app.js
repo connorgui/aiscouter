@@ -309,6 +309,15 @@ const folioAccent = document.querySelector("#folio-accent");
 const folioColorValue = document.querySelector("#folio-color-value");
 const folioBackground = document.querySelector("#folio-background");
 const folioBackgroundValue = document.querySelector("#folio-background-value");
+const liquidSettings = document.querySelector("#liquid-settings");
+const liquidGlassRange = document.querySelector("#liquid-glass-range");
+const liquidGlassOutput = document.querySelector("#liquid-glass-output");
+const liquidBackgroundGrid = document.querySelector("#liquid-background-grid");
+const liquidBackgroundStatus = document.querySelector("#liquid-background-status");
+const liquidBackgroundUpload = document.querySelector("#liquid-background-upload");
+const liquidBackgroundClear = document.querySelector("#liquid-background-clear");
+const liquidTint = document.querySelector("#liquid-tint");
+const liquidTintValue = document.querySelector("#liquid-tint-value");
 const folioSearch = document.querySelector("#folio-search");
 const folioToolList = document.querySelector("#folio-tool-list");
 const folioToolDetail = document.querySelector("#folio-tool-detail");
@@ -329,9 +338,10 @@ let activeFolioFilter = "all";
 let selectedFolioToolId = "chatgpt";
 let savedToolIds = new Set(JSON.parse(localStorage.getItem("ai-scouter-saved") || "[]"));
 let comparedToolIds = ["chatgpt", "claude"];
-const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5" };
+const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff" };
 let appearancePreferences = { ...appearanceDefaults };
 const isFolioPalette = (palette) => palette === "folio";
+const isLiquidPalette = (palette) => palette === "liquid";
 
 try {
   const storedPreferences = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
@@ -339,6 +349,14 @@ try {
   if (String(appearancePreferences.folioLightBackground).toLowerCase() === "#fbfcf8") appearancePreferences.folioLightBackground = appearanceDefaults.folioLightBackground;
   if (appearancePreferences.palette === "folio-scouter") appearancePreferences.palette = "folio";
   if (!("layout" in storedPreferences)) appearancePreferences.layout = isFolioPalette(storedPreferences.palette) ? "split" : "catalog";
+  const storedGlassLevel = Number(appearancePreferences.liquidGlass);
+  appearancePreferences.liquidGlass = Number.isFinite(storedGlassLevel) ? Math.max(0, Math.min(100, storedGlassLevel)) : appearanceDefaults.liquidGlass;
+  if (!Object.prototype.hasOwnProperty.call({ aurora: true, coast: true, orchid: true, midnight: true }, appearancePreferences.liquidBackground)) appearancePreferences.liquidBackground = appearanceDefaults.liquidBackground;
+  if (!/^#[0-9a-f]{6}$/i.test(appearancePreferences.liquidTint)) appearancePreferences.liquidTint = appearanceDefaults.liquidTint;
+  if (!/^data:image\/(?:png|jpeg|webp|avif);base64,/i.test(appearancePreferences.liquidBackgroundImage || "")) {
+    appearancePreferences.liquidBackgroundImage = "";
+    appearancePreferences.liquidBackgroundName = "";
+  }
 } catch {
   localStorage.removeItem("ai-scouter-preferences");
 }
@@ -812,8 +830,44 @@ function applyFolioColors(root, effectiveMode) {
   root.style.setProperty("--line-strong", mixHex(primary, surface, effectiveMode === "dark" ? 0.30 : 0.22));
 }
 
+const liquidBackgroundLabels = {
+  aurora: "Aurora Flow",
+  coast: "Pacific Coast",
+  orchid: "Orchid Light",
+  midnight: "Midnight Bloom"
+};
+
+const liquidStyleProperties = [
+  "--liquid-glass-alpha", "--liquid-glass-blur", "--liquid-tint", "--liquid-custom-background"
+];
+
+function safeLiquidBackgroundImage(value) {
+  return /^data:image\/(?:png|jpeg|webp|avif);base64,/i.test(String(value || "")) ? value : "";
+}
+
+function liquidIntensityLabel(value) {
+  if (value <= 22) return "Ultraclear";
+  if (value <= 58) return "Balanced";
+  if (value <= 82) return "Tinted";
+  return "Fully tinted";
+}
+
+function applyLiquidGlass(root) {
+  const level = Math.max(0, Math.min(100, Number(appearancePreferences.liquidGlass) || 0));
+  const image = safeLiquidBackgroundImage(appearancePreferences.liquidBackgroundImage);
+  root.dataset.liquidBackground = liquidBackgroundLabels[appearancePreferences.liquidBackground]
+    ? appearancePreferences.liquidBackground
+    : appearanceDefaults.liquidBackground;
+  root.dataset.liquidCustomBackground = String(Boolean(image));
+  root.style.setProperty("--liquid-glass-alpha", String(0.14 + level * 0.0042));
+  root.style.setProperty("--liquid-glass-blur", `${30 - level * 0.1}px`);
+  root.style.setProperty("--liquid-tint", normalizeHex(appearancePreferences.liquidTint));
+  root.style.setProperty("--liquid-custom-background", image ? `url("${image}")` : "none");
+}
+
 function syncSettingsControls() {
   const folioLocked = isFolioPalette(appearancePreferences.palette);
+  const liquidActive = isLiquidPalette(appearancePreferences.palette);
   document.querySelectorAll('input[name="appearance"]').forEach((input) => {
     input.checked = input.value === appearancePreferences.mode;
   });
@@ -847,6 +901,21 @@ function syncSettingsControls() {
   folioBackground.value = activeFolioBackground;
   folioBackgroundValue.textContent = activeFolioBackground.toUpperCase();
   document.querySelector('[data-reset-setting="folioBackground"], [data-reset-setting="folioLightBackground"]').dataset.resetSetting = folioBackgroundSetting;
+  liquidSettings.hidden = !liquidActive;
+  liquidGlassRange.value = String(appearancePreferences.liquidGlass);
+  liquidGlassOutput.textContent = `${appearancePreferences.liquidGlass}% · ${liquidIntensityLabel(Number(appearancePreferences.liquidGlass))}`;
+  liquidTint.value = normalizeHex(appearancePreferences.liquidTint);
+  liquidTintValue.textContent = liquidTint.value.toUpperCase();
+  const uploadedBackground = Boolean(safeLiquidBackgroundImage(appearancePreferences.liquidBackgroundImage));
+  liquidBackgroundStatus.textContent = uploadedBackground
+    ? `Custom · ${appearancePreferences.liquidBackgroundName || "Browser image"}`
+    : (liquidBackgroundLabels[appearancePreferences.liquidBackground] || liquidBackgroundLabels[appearanceDefaults.liquidBackground]);
+  liquidBackgroundGrid.querySelectorAll("[data-liquid-background]").forEach((button) => {
+    const selected = !uploadedBackground && button.dataset.liquidBackground === appearancePreferences.liquidBackground;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  liquidBackgroundClear.disabled = !uploadedBackground;
 }
 
 function applyAppearance({ save = true } = {}) {
@@ -864,6 +933,13 @@ function applyAppearance({ save = true } = {}) {
     applyFolioColors(root, effectiveMode);
   } else {
     folioColorProperties.forEach((property) => root.style.removeProperty(property));
+  }
+  if (isLiquidPalette(appearancePreferences.palette)) {
+    applyLiquidGlass(root);
+  } else {
+    root.dataset.liquidBackground = appearancePreferences.liquidBackground;
+    root.dataset.liquidCustomBackground = "false";
+    liquidStyleProperties.forEach((property) => root.style.removeProperty(property));
   }
   root.style.colorScheme = effectiveMode;
 
@@ -1145,6 +1221,63 @@ folioBackground.addEventListener("input", () => {
   applyAppearance();
 });
 
+liquidGlassRange.addEventListener("input", () => {
+  appearancePreferences.liquidGlass = Number(liquidGlassRange.value);
+  applyAppearance();
+});
+
+liquidBackgroundGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-liquid-background]");
+  if (!button) return;
+  appearancePreferences.liquidBackground = button.dataset.liquidBackground;
+  appearancePreferences.liquidBackgroundImage = "";
+  appearancePreferences.liquidBackgroundName = "";
+  liquidBackgroundUpload.value = "";
+  applyAppearance();
+});
+
+liquidBackgroundUpload.addEventListener("change", () => {
+  const [file] = liquidBackgroundUpload.files;
+  if (!file) return;
+  const supportedTypes = new Set(["image/png", "image/jpeg", "image/webp", "image/avif"]);
+  if (!supportedTypes.has(file.type)) {
+    liquidBackgroundUpload.value = "";
+    showToast("Choose a PNG, JPEG, WebP, or AVIF image");
+    return;
+  }
+  if (file.size > 1.5 * 1024 * 1024) {
+    liquidBackgroundUpload.value = "";
+    showToast("Background images must be 1.5 MB or smaller");
+    return;
+  }
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    const image = safeLiquidBackgroundImage(reader.result);
+    if (!image) {
+      showToast("That image could not be used");
+      return;
+    }
+    appearancePreferences.liquidBackgroundImage = image;
+    appearancePreferences.liquidBackgroundName = file.name;
+    applyAppearance();
+    showToast("Custom Liquid Glass background added");
+  });
+  reader.readAsDataURL(file);
+});
+
+liquidBackgroundClear.addEventListener("click", () => {
+  appearancePreferences.liquidBackgroundImage = "";
+  appearancePreferences.liquidBackgroundName = "";
+  liquidBackgroundUpload.value = "";
+  applyAppearance();
+  showToast("Custom background removed");
+});
+
+liquidTint.addEventListener("input", () => {
+  appearancePreferences.liquidTint = liquidTint.value;
+  applyAppearance();
+});
+
 radiusRange.addEventListener("input", () => {
   appearancePreferences.radius = Number(radiusRange.value);
   applyAppearance();
@@ -1229,6 +1362,7 @@ document.querySelector("#folio-reset").addEventListener("click", () => {
 
 document.querySelector("#reset-settings").addEventListener("click", () => {
   appearancePreferences = { ...appearanceDefaults };
+  liquidBackgroundUpload.value = "";
   applyAppearance();
   showToast("Appearance settings reset");
 });
@@ -1239,8 +1373,13 @@ document.querySelector(".settings-list").addEventListener("click", (event) => {
   const setting = button.dataset.resetSetting;
   if (!(setting in appearanceDefaults)) return;
   appearancePreferences[setting] = appearanceDefaults[setting];
+  if (setting === "liquidBackground" || setting === "liquidBackgroundImage") {
+    appearancePreferences.liquidBackgroundImage = "";
+    appearancePreferences.liquidBackgroundName = "";
+    liquidBackgroundUpload.value = "";
+  }
   applyAppearance();
-  const labels = { mode: "Appearance", palette: "Theme", layout: "Layout", radius: "Corner roundness", bold: "Typography", moreInfo: "Hover information", folioAccent: "Folio accent", folioBackground: "Folio dark background", folioLightBackground: "Folio light background" };
+  const labels = { mode: "Appearance", palette: "Theme", layout: "Layout", radius: "Corner roundness", bold: "Typography", moreInfo: "Hover information", folioAccent: "Folio accent", folioBackground: "Folio dark background", folioLightBackground: "Folio light background", liquidGlass: "Glass intensity", liquidBackground: "Liquid background", liquidBackgroundImage: "Custom background", liquidTint: "Glass tint" };
   showToast(`${labels[setting]} reset`);
 });
 
