@@ -38,8 +38,8 @@
         root.dataset.bold = String(folioPalette ? true : preferences.bold);
         root.style.setProperty("--user-radius", `${folioPalette ? 6 : preferences.radius}px`);
         const glassLevel = Math.max(0, Math.min(100, Number(preferences.liquidGlass) || 0));
-        root.style.setProperty("--liquid-glass-alpha", String(.035 + glassLevel * .0022));
-        root.style.setProperty("--liquid-glass-blur", `${4 + glassLevel * .05}px`);
+        root.style.setProperty("--liquid-glass-alpha", String(.045 + glassLevel * .0015));
+        root.style.setProperty("--liquid-glass-blur", `${12 + glassLevel * .12}px`);
         root.style.setProperty("--liquid-tint", /^#[0-9a-f]{6}$/i.test(preferences.liquidTint) ? preferences.liquidTint : defaults.liquidTint);
         const safeLiquidImage = /^data:image\/(?:png|jpeg|webp|avif);base64,/i.test(preferences.liquidBackgroundImage || "") ? preferences.liquidBackgroundImage : "";
         root.style.setProperty("--liquid-custom-background", safeLiquidImage ? `url("${safeLiquidImage}")` : "none");
@@ -94,8 +94,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261118c" />
-    <script src="/app.js?v=20261118c" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261118d" />
+    <script src="/app.js?v=20261118d" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>

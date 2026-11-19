@@ -859,8 +859,8 @@ function applyLiquidGlass(root) {
     ? appearancePreferences.liquidBackground
     : appearanceDefaults.liquidBackground;
   root.dataset.liquidCustomBackground = String(Boolean(image));
-  root.style.setProperty("--liquid-glass-alpha", String(0.035 + level * 0.0022));
-  root.style.setProperty("--liquid-glass-blur", `${4 + level * 0.05}px`);
+  root.style.setProperty("--liquid-glass-alpha", String(0.045 + level * 0.0015));
+  root.style.setProperty("--liquid-glass-blur", `${12 + level * 0.12}px`);
   root.style.setProperty("--liquid-tint", normalizeHex(appearancePreferences.liquidTint));
   root.style.setProperty("--liquid-custom-background", image ? `url("${image}")` : "none");
 }
