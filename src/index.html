@@ -12,10 +12,10 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script>
       (() => {
-        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff" };
+        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2 };
         let preferences = defaults;
         try {
           const stored = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
@@ -23,6 +23,11 @@
           if (String(preferences.folioLightBackground).toLowerCase() === "#fbfcf8") preferences.folioLightBackground = defaults.folioLightBackground;
           if (preferences.palette === "folio-scouter") preferences.palette = "folio";
           if (!("layout" in stored)) preferences.layout = stored.palette === "folio" ? "split" : "catalog";
+          if (preferences.palette === "navigator" && stored.fieldbookVersion !== 2) {
+            preferences.layout = "catalog";
+            preferences.fieldbookVersion = 2;
+            localStorage.setItem("ai-scouter-preferences", JSON.stringify(preferences));
+          }
         } catch {}
         const root = document.documentElement;
         const dark = preferences.mode === "system" ? matchMedia("(prefers-color-scheme: dark)").matches : preferences.mode === "dark";
@@ -94,8 +99,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261120a" />
-    <script src="/app.js?v=20261120a" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261120b" />
+    <script src="/app.js?v=20261120b" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -311,7 +316,7 @@
                 <section class="settings-card"><div class="settings-card-head"><div><span>APPEARANCE</span><h2>Light and dark mode</h2><p>System follows your browser or operating-system preference automatically.</p></div><div class="setting-actions"><strong id="appearance-status">System</strong><button class="setting-reset" type="button" data-reset-setting="mode">Reset</button></div></div><div class="segmented-control" id="appearance-control" role="radiogroup" aria-label="Appearance mode"><label><input type="radio" name="appearance" value="system" checked /><span>◐ System</span></label><label><input type="radio" name="appearance" value="light" /><span>☼ Light</span></label><label><input type="radio" name="appearance" value="dark" /><span>☾ Dark</span></label></div></section>
                 <section class="settings-card"><div class="settings-card-head"><div><span>COLOR STYLE</span><h2>Choose a theme</h2><p>Each palette includes its own accessible accent-text pairing.</p></div><button class="setting-reset" type="button" data-reset-setting="palette">Reset</button></div><div class="theme-grid" id="theme-grid">
                   <button type="button" class="theme-option selected" data-palette-option="default" aria-pressed="true"><i class="theme-preview theme-default"><b></b><em></em><span></span></i><strong>Default</strong><small>Clean indigo</small></button>
-                  <button type="button" class="theme-option" data-palette-option="navigator" aria-pressed="false"><i class="theme-preview theme-navigator"><b></b><em></em><span></span></i><strong>Navigator</strong><small>Focused workspace</small></button>
+                  <button type="button" class="theme-option" data-palette-option="navigator" aria-pressed="false"><i class="theme-preview theme-navigator"><b></b><em></em><span></span></i><strong>Fieldbook</strong><small>Editorial index</small></button>
                   <button type="button" class="theme-option" data-palette-option="folio" aria-pressed="false"><i class="theme-preview theme-folio"><b></b><em></em><span></span></i><strong>Folio</strong><small>Folio Scouter</small></button>
                   <button type="button" class="theme-option" data-palette-option="deploy" aria-pressed="false"><i class="theme-preview theme-deploy"><b></b><em></em><span></span></i><strong>Deploy</strong><small>Midnight violet</small></button>
                   <button type="button" class="theme-option" data-palette-option="ocean" aria-pressed="false"><i class="theme-preview theme-ocean"><b></b><em></em><span></span></i><strong>Ocean</strong><small>Navy + aqua</small></button>

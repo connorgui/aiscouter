@@ -338,7 +338,7 @@ let activeFolioFilter = "all";
 let selectedFolioToolId = "chatgpt";
 let savedToolIds = new Set(JSON.parse(localStorage.getItem("ai-scouter-saved") || "[]"));
 let comparedToolIds = ["chatgpt", "claude"];
-const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff" };
+const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2 };
 let appearancePreferences = { ...appearanceDefaults };
 const isFolioPalette = (palette) => palette === "folio";
 const isLiquidPalette = (palette) => palette === "liquid";
@@ -349,6 +349,11 @@ try {
   if (String(appearancePreferences.folioLightBackground).toLowerCase() === "#fbfcf8") appearancePreferences.folioLightBackground = appearanceDefaults.folioLightBackground;
   if (appearancePreferences.palette === "folio-scouter") appearancePreferences.palette = "folio";
   if (!("layout" in storedPreferences)) appearancePreferences.layout = isFolioPalette(storedPreferences.palette) ? "split" : "catalog";
+  if (appearancePreferences.palette === "navigator" && storedPreferences.fieldbookVersion !== 2) {
+    appearancePreferences.layout = "catalog";
+    appearancePreferences.fieldbookVersion = 2;
+    localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
+  }
   const storedGlassLevel = Number(appearancePreferences.liquidGlass);
   appearancePreferences.liquidGlass = Number.isFinite(storedGlassLevel) ? Math.max(0, Math.min(100, storedGlassLevel)) : appearanceDefaults.liquidGlass;
   if (!Object.prototype.hasOwnProperty.call({ aurora: true, coast: true, orchid: true, midnight: true }, appearancePreferences.liquidBackground)) appearancePreferences.liquidBackground = appearanceDefaults.liquidBackground;
@@ -1200,6 +1205,10 @@ document.querySelector("#theme-grid").addEventListener("click", (event) => {
   if (!button) return;
   appearancePreferences.palette = button.dataset.paletteOption;
   if (appearancePreferences.palette === "atlas") appearancePreferences.layout = "split";
+  if (appearancePreferences.palette === "navigator") {
+    appearancePreferences.layout = "catalog";
+    appearancePreferences.fieldbookVersion = 2;
+  }
   applyAppearance();
 });
 
