@@ -338,7 +338,7 @@ let activeFolioFilter = "all";
 let selectedFolioToolId = "chatgpt";
 let savedToolIds = new Set(JSON.parse(localStorage.getItem("ai-scouter-saved") || "[]"));
 let comparedToolIds = ["chatgpt", "claude"];
-const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2 };
+const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
 let appearancePreferences = { ...appearanceDefaults };
 const isFolioPalette = (palette) => palette === "folio";
 const isLiquidPalette = (palette) => palette === "liquid";
@@ -352,6 +352,11 @@ try {
   if (appearancePreferences.palette === "navigator" && storedPreferences.fieldbookVersion !== 2) {
     appearancePreferences.layout = "catalog";
     appearancePreferences.fieldbookVersion = 2;
+    localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
+  }
+  if (storedPreferences.typographyVersion !== 2) {
+    appearancePreferences.bold = false;
+    appearancePreferences.typographyVersion = 2;
     localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
   }
   const storedGlassLevel = Number(appearancePreferences.liquidGlass);
@@ -859,15 +864,12 @@ function liquidIntensityLabel(value) {
 
 function applyLiquidGlass(root) {
   const level = Math.max(0, Math.min(100, Number(appearancePreferences.liquidGlass) || 0));
-  const image = safeLiquidBackgroundImage(appearancePreferences.liquidBackgroundImage);
-  root.dataset.liquidBackground = liquidBackgroundLabels[appearancePreferences.liquidBackground]
-    ? appearancePreferences.liquidBackground
-    : appearanceDefaults.liquidBackground;
-  root.dataset.liquidCustomBackground = String(Boolean(image));
+  root.dataset.liquidBackground = "mode";
+  root.dataset.liquidCustomBackground = "false";
   root.style.setProperty("--liquid-glass-alpha", String(0.045 + level * 0.0015));
   root.style.setProperty("--liquid-glass-blur", `${12 + level * 0.12}px`);
   root.style.setProperty("--liquid-tint", normalizeHex(appearancePreferences.liquidTint));
-  root.style.setProperty("--liquid-custom-background", image ? `url("${image}")` : "none");
+  root.style.setProperty("--liquid-custom-background", "none");
 }
 
 function syncSettingsControls() {

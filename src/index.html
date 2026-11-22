@@ -12,10 +12,10 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <script>
       (() => {
-        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: true, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2 };
+        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
         let preferences = defaults;
         try {
           const stored = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
@@ -28,6 +28,11 @@
             preferences.fieldbookVersion = 2;
             localStorage.setItem("ai-scouter-preferences", JSON.stringify(preferences));
           }
+          if (stored.typographyVersion !== 2) {
+            preferences.bold = false;
+            preferences.typographyVersion = 2;
+            localStorage.setItem("ai-scouter-preferences", JSON.stringify(preferences));
+          }
         } catch {}
         const root = document.documentElement;
         const dark = preferences.mode === "system" ? matchMedia("(prefers-color-scheme: dark)").matches : preferences.mode === "dark";
@@ -37,8 +42,8 @@
         root.dataset.palette = preferences.palette;
         root.dataset.layout = preferences.layout;
         root.dataset.moreInfo = String(preferences.moreInfo);
-        root.dataset.liquidBackground = preferences.liquidBackground;
-        root.dataset.liquidCustomBackground = String(Boolean(preferences.liquidBackgroundImage));
+        root.dataset.liquidBackground = "mode";
+        root.dataset.liquidCustomBackground = "false";
         root.dataset.fixedStyle = folioPalette ? "folio" : "none";
         root.dataset.bold = String(folioPalette ? true : preferences.bold);
         root.style.setProperty("--user-radius", `${folioPalette ? 6 : preferences.radius}px`);
@@ -46,8 +51,7 @@
         root.style.setProperty("--liquid-glass-alpha", String(.045 + glassLevel * .0015));
         root.style.setProperty("--liquid-glass-blur", `${12 + glassLevel * .12}px`);
         root.style.setProperty("--liquid-tint", /^#[0-9a-f]{6}$/i.test(preferences.liquidTint) ? preferences.liquidTint : defaults.liquidTint);
-        const safeLiquidImage = /^data:image\/(?:png|jpeg|webp|avif);base64,/i.test(preferences.liquidBackgroundImage || "") ? preferences.liquidBackgroundImage : "";
-        root.style.setProperty("--liquid-custom-background", safeLiquidImage ? `url("${safeLiquidImage}")` : "none");
+        root.style.setProperty("--liquid-custom-background", "none");
         if (folioPalette) {
           const normalize = (hex) => /^[0-9a-f]{6}$/i.test(String(hex || "").replace("#", "")) ? `#${String(hex).replace("#", "").toLowerCase()}` : "#111111";
           const channels = (hex) => [0, 2, 4].map((index) => parseInt(normalize(hex).slice(1).slice(index, index + 2), 16));
@@ -99,8 +103,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261120b" />
-    <script src="/app.js?v=20261120b" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261122a" />
+    <script src="/app.js?v=20261122a" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -324,6 +328,7 @@
                   <button type="button" class="theme-option" data-palette-option="mono" aria-pressed="false"><i class="theme-preview theme-mono"><b></b><em></em><span></span></i><strong>Mono</strong><small>Ink + paper</small></button>
                   <button type="button" class="theme-option" data-palette-option="atlas" aria-pressed="false"><i class="theme-preview theme-atlas"><b></b><em></em><span></span></i><strong>Atlas</strong><small>AI operations desk</small></button>
                   <button type="button" class="theme-option" data-palette-option="liquid" aria-pressed="false"><i class="theme-preview theme-liquid"><b></b><em></em><span></span></i><strong>Liquid Glass</strong><small>macOS-inspired glass</small></button>
+                  <button type="button" class="theme-option" data-palette-option="creations" aria-pressed="false"><i class="theme-preview theme-creations"><b></b><em></em><span></span></i><strong>CG Creations</strong><small>Digital playground</small></button>
                 </div></section>
                 <section class="settings-card"><div class="settings-card-head"><div><span>APP LAYOUT</span><h2>Choose how tools are arranged</h2><p>Layout is independent from color. Every theme can use every layout.</p></div><button class="setting-reset" type="button" data-reset-setting="layout">Reset</button></div><div class="layout-grid" id="layout-grid">
                   <button type="button" class="layout-option selected" data-layout-option="catalog" aria-pressed="true"><i class="layout-preview layout-catalog"><span></span><span></span><span></span></i><strong>Catalog</strong><small>Matcher + cards</small></button>
@@ -333,13 +338,18 @@
                 <section class="settings-card compact-setting" id="hover-info-settings"><div><span>TOOL DETAILS</span><h2>More information when hovering</h2><p>Reveal capabilities, strengths, and tradeoffs on cards and rows. Side by Side already shows the full profile.</p></div><div class="setting-control-row"><label class="switch-control"><input id="hover-info-toggle" type="checkbox" /><span><i></i></span><b id="hover-info-label">Off</b></label><button class="setting-reset" type="button" data-reset-setting="moreInfo">Reset</button></div></section>
                 <section class="settings-card folio-color-setting" id="folio-color-setting" hidden><div class="folio-color-intro"><span>FOLIO COLORS</span><h2>Customize the fixed theme</h2><p>Folio’s typography, radius, and spacing stay fixed. Its layout, accent, and background remain independently selectable.</p></div><div class="folio-color-controls"><div class="color-setting-row"><label class="color-control"><input id="folio-accent" type="color" value="#afca7d" aria-label="Folio accent color" /><span><b>Accent color</b><small id="folio-color-value">#AFCA7D</small></span></label><button class="setting-reset" type="button" data-reset-setting="folioAccent">Reset</button></div><div class="color-setting-row"><label class="color-control"><input id="folio-background" type="color" value="#0f1711" aria-label="Folio background color" /><span><b>Background color</b><small id="folio-background-value">#0F1711</small></span></label><button class="setting-reset" type="button" data-reset-setting="folioBackground">Reset</button></div></div></section>
                 <section class="settings-card liquid-settings" id="liquid-settings" hidden>
-                  <div class="settings-card-head"><div><span>LIQUID GLASS</span><h2>Glass and wallpaper</h2><p>Adjust the material from ultraclear to fully tinted, then choose a backdrop for the glass to refract.</p></div><strong>Golden Gate</strong></div>
+                  <div class="settings-card-head"><div><span>LIQUID GLASS</span><h2>Glass and contrast</h2><p>Adjust the clear material over a mode-aware canvas: white in Light mode and black in Dark mode.</p></div><strong>Golden Gate</strong></div>
                   <div class="liquid-setting-row">
                     <div><b>Glass intensity</b><small>More tint improves separation and legibility over detailed backgrounds.</small></div>
                     <div class="liquid-intensity-control"><output id="liquid-glass-output" for="liquid-glass-range">46% · Balanced</output><input id="liquid-glass-range" type="range" min="0" max="100" value="46" step="1" aria-label="Liquid Glass intensity" /><div><span>Ultraclear</span><span>Fully tinted</span></div></div>
                     <button class="setting-reset" type="button" data-reset-setting="liquidGlass">Reset</button>
                   </div>
-                  <div class="liquid-setting-row liquid-background-row">
+                  <div class="liquid-setting-row liquid-mode-background">
+                    <div><b>Mode background</b><small>Liquid Glass automatically follows the active appearance mode.</small></div>
+                    <div class="liquid-mode-swatches" aria-label="Automatic Liquid Glass backgrounds"><span><i></i>Light · White</span><span><i></i>Dark · Black</span></div>
+                    <strong>Automatic</strong>
+                  </div>
+                  <div class="liquid-setting-row liquid-background-row liquid-wallpaper-setting" aria-hidden="true">
                     <div><b>Background</b><small id="liquid-background-status">Aurora Flow</small></div>
                     <div class="liquid-background-grid" id="liquid-background-grid" aria-label="Liquid Glass backgrounds">
                       <button type="button" data-liquid-background="aurora" aria-pressed="true"><i class="liquid-swatch liquid-swatch-aurora"></i><span>Aurora</span></button>
@@ -349,7 +359,7 @@
                     </div>
                     <button class="setting-reset" type="button" data-reset-setting="liquidBackground">Reset</button>
                   </div>
-                  <div class="liquid-setting-row">
+                  <div class="liquid-setting-row liquid-wallpaper-setting" aria-hidden="true">
                     <div><b>Custom wallpaper</b><small>Upload a PNG, JPEG, WebP, or AVIF image up to 1.5 MB. It stays in this browser.</small></div>
                     <div class="liquid-upload-actions"><label class="liquid-upload"><input id="liquid-background-upload" type="file" accept="image/png,image/jpeg,image/webp,image/avif" /><span>＋ Add background</span></label><button id="liquid-background-clear" type="button">Remove image</button></div>
                     <button class="setting-reset" type="button" data-reset-setting="liquidBackgroundImage">Reset</button>
@@ -361,7 +371,7 @@
                   </div>
                 </section>
                 <section class="settings-card compact-setting" id="corner-settings"><div><span>CORNERS</span><h2>Corner roundness</h2><p>Adjust cards, fields, buttons, and panels.</p></div><div class="setting-control-row"><div class="radius-control"><output id="radius-output" for="radius-range">18 px</output><input id="radius-range" type="range" min="0" max="30" value="18" step="1" aria-label="Corner roundness" /><div><span>Square</span><span>Round</span></div></div><button class="setting-reset" type="button" data-reset-setting="radius">Reset</button></div></section>
-                <section class="settings-card compact-setting" id="type-settings"><div><span>TYPOGRAPHY</span><h2>Bold interface text</h2><p>Use stronger headings and controls, or choose a quieter weight.</p></div><div class="setting-control-row"><label class="switch-control"><input id="bold-toggle" type="checkbox" checked /><span><i></i></span><b id="bold-label">Bold</b></label><button class="setting-reset" type="button" data-reset-setting="bold">Reset</button></div></section>
+                <section class="settings-card compact-setting" id="type-settings"><div><span>TYPOGRAPHY</span><h2>Bold interface text</h2><p>Use stronger headings and controls, or choose a quieter weight.</p></div><div class="setting-control-row"><label class="switch-control"><input id="bold-toggle" type="checkbox" /><span><i></i></span><b id="bold-label">Regular</b></label><button class="setting-reset" type="button" data-reset-setting="bold">Reset</button></div></section>
                 <button class="reset-settings" id="reset-settings" type="button">Reset appearance settings</button>
               </div>
               <aside class="settings-preview" aria-label="Theme preview"><div class="preview-window"><div class="preview-top"><i></i><i></i><i></i><span>AI Scouter</span></div><div class="preview-body"><small>LIVE PREVIEW</small><h2>Find the right AI.</h2><p>Your appearance settings update this preview and the full interface instantly.</p><div class="preview-search"><span>⌕</span><i></i></div><div class="preview-cards"><article><i></i><b></b><span></span></article><article><i></i><b></b><span></span></article></div><button type="button" data-go-page="tools">Explore tools</button></div></div></aside>
