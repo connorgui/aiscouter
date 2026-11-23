@@ -730,7 +730,7 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   --line-strong:rgb(255 255 255 / .18);
   --surface:rgb(13 42 61 / .82);
   --surface-soft:rgb(255 255 255 / .045);
-  --canvas:#2b6f91;
+  --canvas:#061522;
   --sidebar-bg:rgb(6 21 34 / .94);
   --primary-dark:#9af0e7;
   --primary-soft:rgb(104 225 212 / .11);
@@ -748,7 +748,7 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   --line-strong:rgb(16 36 53 / .2);
   --surface:rgb(255 255 255 / .78);
   --surface-soft:rgb(11 38 56 / .045);
-  --canvas:#d9f2fa;
+  --canvas:#dbe5f4;
   --sidebar-bg:rgb(247 243 235 / .96);
   --primary:#087f80;
   --primary-dark:#075d62;
@@ -760,8 +760,8 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   color-scheme:light;
 }
 :root[data-palette="creations"] body{position:relative;background:var(--canvas)}
-:root[data-palette="creations"][data-theme="dark"] body{background:linear-gradient(110deg,rgb(24 75 104 / .96),rgb(37 105 137 / .88) 48%,rgb(69 154 183 / .72)),radial-gradient(circle at 82% 18%,#8ad9eb 0%,#56abc8 32%,#2b6f91 74%);background-attachment:fixed}
-:root[data-palette="creations"][data-theme="light"] body{background:radial-gradient(circle at 88% 8%,rgb(104 225 212 / .48),transparent 28%),linear-gradient(135deg,#eaf9fd 0%,#d9f2fa 52%,#c8eaf6 100%);background-attachment:fixed}
+:root[data-palette="creations"][data-theme="dark"] body{background:linear-gradient(90deg,rgb(4 18 30 / .98),rgb(4 18 30 / .89) 44%,rgb(6 27 43 / .73)),radial-gradient(circle at 79% 24%,#1c7690 0%,#103d5c 34%,#061522 72%);background-attachment:fixed}
+:root[data-palette="creations"][data-theme="light"] body{background:#dbe5f4;background-attachment:fixed}
 :root[data-palette="creations"] body::before{content:"";position:fixed;z-index:-1;right:-12vw;bottom:-42vw;width:78vw;height:78vw;border:1px solid color-mix(in srgb,var(--primary) 28%,transparent);border-radius:50%;background:linear-gradient(145deg,color-mix(in srgb,var(--primary) 8%,transparent),transparent 60%);pointer-events:none}
 :root[data-palette="creations"] .app-shell{position:relative;isolation:isolate}
 :root[data-palette="creations"] :is(h1,h2,h3,h4,.brand strong,.inner-hero h1){font-family:"Space Grotesk",sans-serif}
