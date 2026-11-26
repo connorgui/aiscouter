@@ -876,6 +876,224 @@ h1,h2,h3,h4,.brand strong{font-weight:var(--display-weight)}button,.nav-link,.ch
   :root[data-palette="creations"][data-layout="compact"] .directory-card{display:flex;padding:16px}
 }
 
+/* Signal theme: a distinct bento command deck with its own composition, scale, and interaction language. */
+.theme-signal{--preview-canvas:#0b100d;--preview-side:#151d18;--preview-text:#f1f5e9;--preview-accent:#b8f34a;background:linear-gradient(145deg,#0b100d 0 56%,#b8f34a 56% 70%,#76ddff 70%)}
+.theme-signal b{width:25%;border-right:1px solid #b8f34a;background:#151d18}
+.theme-signal em{left:34%;top:15%;width:52%;height:27%;border:1px solid rgb(255 255 255 / .24);border-radius:9px;background:#1d2821;box-shadow:none;transform:rotate(-2deg)}
+.theme-signal span{left:34%;bottom:13%;width:24%;height:24%;border-radius:9px;background:#b8f34a;box-shadow:25px 0 0 #ff6d55,50px 0 0 #76ddff}
+
+:root[data-palette="signal"]{
+  --signal-lime:#b8f34a;
+  --signal-coral:#ff6d55;
+  --signal-blue:#76ddff;
+  --signal-radius:clamp(0px,calc(var(--user-radius) * 1.7),36px);
+  --signal-detail:clamp(0px,calc(var(--user-radius) * 1.05),23px);
+  --radius-component:var(--signal-radius);
+  --radius-detail:var(--signal-detail);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+}
+:root[data-palette="signal"][data-theme="dark"]{
+  --ink:#f1f5e9;
+  --text:#dbe4d8;
+  --muted:#8e9c91;
+  --line:rgb(184 243 74 / .14);
+  --line-strong:rgb(184 243 74 / .29);
+  --surface:#121915;
+  --surface-soft:#1a241e;
+  --canvas:#080c0a;
+  --sidebar-bg:rgb(15 21 17 / .88);
+  --primary:#b8f34a;
+  --primary-dark:#d1ff78;
+  --primary-soft:rgb(184 243 74 / .12);
+  --accent-text:#10150e;
+  --gold:#ffd66b;
+  --success:#b8f34a;
+  --signal-hero:#101611;
+  --signal-shadow:0 28px 90px rgb(0 0 0 / .38);
+  color-scheme:dark;
+}
+:root[data-palette="signal"][data-theme="light"]{
+  --ink:#172019;
+  --text:#29362d;
+  --muted:#68766c;
+  --line:rgb(23 32 25 / .12);
+  --line-strong:rgb(23 32 25 / .23);
+  --surface:#fbfdf7;
+  --surface-soft:#e8eee5;
+  --canvas:#eef3e9;
+  --sidebar-bg:rgb(248 251 244 / .9);
+  --primary:#527c13;
+  --primary-dark:#355a08;
+  --primary-soft:rgb(132 190 44 / .18);
+  --accent-text:#fff;
+  --gold:#9a6413;
+  --success:#47740d;
+  --signal-hero:#182119;
+  --signal-shadow:0 28px 80px rgb(42 60 45 / .16);
+  color-scheme:light;
+}
+:root[data-palette="signal"] body{background-color:var(--canvas);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px),radial-gradient(circle at 78% 8%,color-mix(in srgb,var(--signal-blue) 24%,transparent),transparent 31%);background-size:42px 42px,42px 42px,100% 100%;background-attachment:fixed}
+:root[data-palette="signal"] body:after{content:"";position:fixed;z-index:-1;right:-170px;bottom:-190px;width:520px;height:520px;border:88px solid color-mix(in srgb,var(--signal-coral) 10%,transparent);border-radius:50%;pointer-events:none}
+:root[data-palette="signal"] :is(h1,h2,h3,h4,.brand strong){font-family:"Bricolage Grotesque",system-ui,sans-serif}
+:root[data-palette="signal"] .app-shell{position:relative;isolation:isolate}
+
+/* The sidebar becomes an inset floating instrument panel instead of a page edge. */
+:root[data-palette="signal"] .sidebar{inset:18px auto 18px 18px;width:214px;padding:15px 12px;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--sidebar-bg);box-shadow:var(--signal-shadow);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+:root[data-palette="signal"] .workspace{margin-left:250px}
+:root[data-palette="signal"] .sidebar-top{padding:4px 5px 18px;border-bottom:1px dashed var(--line-strong)}
+:root[data-palette="signal"] .brand{gap:10px}
+:root[data-palette="signal"] .brand-mark{width:36px;height:36px;overflow:visible;border:1px solid var(--line-strong);border-radius:calc(var(--signal-detail) * .7);background:var(--primary);box-shadow:7px 7px 0 color-mix(in srgb,var(--signal-blue) 30%,transparent);transform:rotate(-6deg)}
+:root[data-palette="signal"] .brand-mark i{display:none}
+:root[data-palette="signal"] .brand-mark:after{content:"S";color:var(--accent-text);font:700 1rem "Bricolage Grotesque",sans-serif;transform:rotate(6deg)}
+:root[data-palette="signal"] .brand strong{font-size:.9rem;letter-spacing:-.04em}
+:root[data-palette="signal"] .brand small{font-size:.56rem}
+:root[data-palette="signal"] .sidebar-toggle{border-color:var(--line);border-radius:50%;background:var(--surface-soft);color:var(--text)}
+:root[data-palette="signal"] .sidebar nav{gap:4px;margin-top:8px}
+:root[data-palette="signal"] .sidebar nav p{margin:16px 10px 3px;color:var(--muted);font-size:.52rem;letter-spacing:.16em}
+:root[data-palette="signal"] .nav-link{position:relative;min-height:38px;padding:8px 10px;border:1px solid transparent;border-radius:999px;color:var(--muted);font-size:.67rem;transition:transform .16s ease,background .16s ease}
+:root[data-palette="signal"] .nav-link span{color:var(--signal-blue)}
+:root[data-palette="signal"] .nav-link:hover{border-color:var(--line);background:var(--surface-soft);color:var(--ink);transform:translateX(4px)}
+:root[data-palette="signal"] .nav-link.active{border-color:var(--primary);background:var(--primary);color:var(--accent-text);box-shadow:7px 7px 0 color-mix(in srgb,var(--signal-coral) 35%,transparent)}
+:root[data-palette="signal"] .nav-link.active span{color:var(--accent-text)}
+:root[data-palette="signal"] .nav-count{background:var(--signal-coral);color:#17120f}
+:root[data-palette="signal"] .theme-label{margin-top:auto;border:1px dashed var(--line-strong);border-radius:999px;background:var(--surface-soft);color:var(--muted)}
+
+/* The hero is a self-contained poster with oversized typography and orbital decoration. */
+:root[data-palette="signal"] main{width:min(1480px,calc(100% - 56px));padding-top:18px}
+:root[data-palette="signal"] .page-hero{position:relative;isolation:isolate;align-items:flex-end;min-height:350px;padding:54px 52px;overflow:hidden;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--signal-hero);color:#f4f7ef;box-shadow:var(--signal-shadow)}
+:root[data-palette="signal"] .page-hero:before{content:"SIGNAL / LIVE";position:absolute;top:25px;right:30px;color:var(--signal-lime);font:600 .58rem "DM Mono",monospace;letter-spacing:.18em}
+:root[data-palette="signal"] .page-hero:after{content:"";position:absolute;z-index:-1;right:-95px;top:-135px;width:390px;height:390px;border:72px solid rgb(118 221 255 / .13);border-radius:50%;box-shadow:0 0 0 38px rgb(255 109 85 / .07)}
+:root[data-palette="signal"] .title-row{align-items:flex-end;gap:22px;max-width:1050px}
+:root[data-palette="signal"] .title-icon{width:64px;height:64px;border:1px solid rgb(255 255 255 / .22);border-radius:calc(var(--signal-detail) * .75);background:var(--signal-lime);color:#11170f;box-shadow:10px 10px 0 rgb(118 221 255 / .18);transform:rotate(-5deg)}
+:root[data-palette="signal"] .overline,:root[data-palette="signal"] .section-kicker{color:var(--primary);font-family:"DM Mono",monospace;font-size:.6rem;letter-spacing:.16em}
+:root[data-palette="signal"] h1{max-width:980px;margin:0;color:inherit;font-size:clamp(3.15rem,6.7vw,7.6rem);font-weight:var(--heading-weight);line-height:.78;letter-spacing:-.085em;text-transform:uppercase}
+:root[data-palette="signal"] .page-hero p{max-width:640px;margin-top:18px;color:rgb(244 247 239 / .68);font-size:1rem;line-height:1.55}
+:root[data-palette="signal"] .page-hero p strong{color:var(--signal-lime)}
+:root[data-palette="signal"] .hero-status{position:absolute;right:30px;bottom:28px;border:1px solid rgb(255 255 255 / .2);border-radius:999px;background:rgb(255 255 255 / .08);color:#f4f7ef;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+:root[data-palette="signal"] .hero-status i{background:var(--signal-lime);box-shadow:0 0 18px var(--signal-lime)}
+
+/* The matcher deliberately overlaps the poster and behaves like a tactile console. */
+:root[data-palette="signal"] .matcher-card{position:relative;z-index:3;width:calc(100% - 76px);margin:-52px auto 0;padding:30px;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:color-mix(in srgb,var(--surface) 92%,transparent);box-shadow:var(--signal-shadow);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+:root[data-palette="signal"] .matcher-heading{display:flex;margin-bottom:18px}
+:root[data-palette="signal"] .matcher-heading h2{font-size:clamp(1.5rem,2.5vw,2.5rem)}
+:root[data-palette="signal"] .privacy-chip{border-color:var(--line-strong);border-radius:999px;background:var(--primary-soft);color:var(--primary-dark)}
+:root[data-palette="signal"] .task-composer{border:1px solid var(--line-strong);border-radius:var(--signal-detail);background:var(--surface-soft);box-shadow:inset 0 1px 0 rgb(255 255 255 / .08)}
+:root[data-palette="signal"] .task-composer:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft),10px 10px 0 color-mix(in srgb,var(--signal-blue) 15%,transparent)}
+:root[data-palette="signal"] textarea{background:transparent;color:var(--ink)}
+:root[data-palette="signal"] .match-button{border:1px solid var(--primary);border-radius:999px;background:var(--primary);color:var(--accent-text);box-shadow:7px 7px 0 color-mix(in srgb,var(--signal-coral) 44%,transparent)}
+:root[data-palette="signal"] .match-button:hover{background:var(--primary);transform:translate(-2px,-2px);box-shadow:10px 10px 0 color-mix(in srgb,var(--signal-coral) 52%,transparent)}
+:root[data-palette="signal"] .match-modes{display:grid;grid-template-columns:repeat(4,max-content) minmax(0,1fr);gap:7px}
+:root[data-palette="signal"] :is(.view-button,.verified-label,.choice-grid label>span,.filter-button){border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-soft);color:var(--text)}
+:root[data-palette="signal"] :is(.view-button.active,.choice-grid input:checked+span,.filter-button.active){border-color:var(--primary);background:var(--primary);color:var(--accent-text);box-shadow:5px 5px 0 color-mix(in srgb,var(--signal-blue) 22%,transparent)}
+
+/* Catalog cards abandon the uniform grid for a true bento composition. */
+:root[data-palette="signal"] .directory-section{padding-top:78px}
+:root[data-palette="signal"] .directory-title-row{display:flex;align-items:flex-end}
+:root[data-palette="signal"] .directory-title-row h2{font-size:clamp(2.4rem,5vw,5rem);line-height:.9;text-transform:uppercase}
+:root[data-palette="signal"] .tool-search{border:1px solid var(--line-strong);border-radius:999px;background:var(--surface);box-shadow:8px 8px 0 color-mix(in srgb,var(--primary) 15%,transparent)}
+:root[data-palette="signal"] .directory-toolbar{padding:14px;border:1px dashed var(--line-strong);border-radius:var(--signal-detail);background:color-mix(in srgb,var(--surface) 72%,transparent)}
+:root[data-palette="signal"] .tool-directory{counter-reset:signal-card;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-flow:dense;grid-auto-rows:auto;gap:18px}
+:root[data-palette="signal"] .directory-card{grid-column:span 4;grid-row:auto!important;counter-increment:signal-card;position:relative;isolation:isolate;min-height:270px;margin:0;padding:24px;overflow:hidden;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--surface);box-shadow:12px 12px 0 color-mix(in srgb,var(--ink) 7%,transparent);transition:transform .18s ease,box-shadow .18s ease}
+:root[data-palette="signal"] .directory-card:nth-child(6n+1){grid-column:span 7;min-height:360px}
+:root[data-palette="signal"] .directory-card:nth-child(6n+2){grid-column:span 5;min-height:360px}
+:root[data-palette="signal"] .directory-card:nth-child(6n+4){grid-column:span 5}
+:root[data-palette="signal"] .directory-card:nth-child(6n+5){grid-column:span 7}
+:root[data-palette="signal"] .directory-card:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(145deg,color-mix(in srgb,var(--tool-color) 16%,transparent),transparent 48%);opacity:.7}
+:root[data-palette="signal"] .directory-card:after{content:"0" counter(signal-card);position:absolute;right:20px;bottom:10px;z-index:-1;color:color-mix(in srgb,var(--ink) 5%,transparent);font:700 clamp(4.5rem,9vw,9rem)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.08em}
+:root[data-palette="signal"] .directory-card:hover{border-color:var(--primary);box-shadow:16px 16px 0 color-mix(in srgb,var(--primary) 24%,transparent);transform:translate(-4px,-4px) rotate(-.35deg)}
+:root[data-palette="signal"] .directory-card:nth-child(6n+2):hover,:root[data-palette="signal"] .directory-card:nth-child(6n+5):hover{transform:translate(4px,-4px) rotate(.35deg)}
+:root[data-palette="signal"] .directory-card:nth-child(6n+1){background:linear-gradient(145deg,var(--primary),color-mix(in srgb,var(--primary) 72%,var(--signal-blue)));color:var(--accent-text)}
+:root[data-palette="signal"] .directory-card:nth-child(6n+1) :is(h3,.directory-type,.directory-card>p,.tool-meta span:last-child){color:var(--accent-text)}
+:root[data-palette="signal"] .directory-card:nth-child(6n+1) .directory-mark{width:64px;height:64px}
+:root[data-palette="signal"] .directory-card:nth-child(6n+1) .fit-chip{border-color:color-mix(in srgb,var(--accent-text) 25%,transparent);background:color-mix(in srgb,var(--accent-text) 10%,transparent);color:var(--accent-text)}
+:root[data-palette="signal"] .directory-card h3{font-size:1.05rem}
+:root[data-palette="signal"] .directory-mark,:root[data-palette="signal"] .mini-mark{border:1px solid color-mix(in srgb,var(--tool-color) 45%,var(--line));border-radius:calc(var(--signal-detail) * .75);box-shadow:5px 5px 0 color-mix(in srgb,var(--tool-color) 22%,transparent)}
+:root[data-palette="signal"] .save-tool{border:1px solid var(--line-strong);background:var(--surface-soft)}
+:root[data-palette="signal"] .save-tool.saved{border-color:var(--signal-coral);background:color-mix(in srgb,var(--signal-coral) 18%,transparent);color:var(--signal-coral)}
+:root[data-palette="signal"] .directory-actions button,:root[data-palette="signal"] .directory-actions a{border-radius:999px}
+:root[data-palette="signal"] .details-button{border-color:var(--line-strong);background:var(--surface-soft);color:var(--text)}
+:root[data-palette="signal"] .visit-button{border-color:var(--primary);background:var(--primary);color:var(--accent-text);box-shadow:5px 5px 0 color-mix(in srgb,var(--signal-blue) 20%,transparent)}
+
+/* Supporting pages use the same irregular panels, not a recolored default card set. */
+:root[data-palette="signal"] :is(.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article,.advanced-builder,.blueprint-panel,.compare-table-wrap,.empty-state,.update-list,.settings-card,.settings-preview,.primary-result,.alternative-card,.tool-dialog){border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--surface);box-shadow:10px 10px 0 color-mix(in srgb,var(--ink) 7%,transparent)}
+:root[data-palette="signal"] :is(.stack-grid,.lesson-grid,.resource-grid,.content-grid){gap:18px}
+:root[data-palette="signal"] :is(.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article):nth-child(3n+2){transform:translateY(16px)}
+:root[data-palette="signal"] .how-section{display:grid;grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr);gap:30px;margin-top:88px;padding:34px;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--signal-hero);color:#f4f7ef;box-shadow:var(--signal-shadow)}
+:root[data-palette="signal"] .how-heading{display:block;margin:0;padding:15px}
+:root[data-palette="signal"] .how-heading h2{font-size:clamp(2rem,4vw,4.2rem);line-height:.9;text-transform:uppercase}
+:root[data-palette="signal"] .how-heading p{color:rgb(244 247 239 / .62)}
+:root[data-palette="signal"] .method-grid{grid-template-columns:1fr;border:0;border-radius:var(--signal-detail);background:rgb(255 255 255 / .06)}
+:root[data-palette="signal"] .method-grid article{min-height:0;padding:22px;border:0;border-bottom:1px dashed rgb(255 255 255 / .18)}
+:root[data-palette="signal"] .method-grid article:last-child{border-bottom:0}
+:root[data-palette="signal"] .method-grid h3{margin:10px 0 5px}
+:root[data-palette="signal"] .method-grid p{color:rgb(244 247 239 / .62)}
+:root[data-palette="signal"] .settings-list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+:root[data-palette="signal"] .settings-card{min-height:180px;padding:24px}
+:root[data-palette="signal"] .settings-card:nth-child(3n+1){grid-column:span 2}
+:root[data-palette="signal"] .settings-preview{position:sticky;top:24px;transform:rotate(1deg)}
+:root[data-palette="signal"] .preview-window{border-radius:var(--signal-detail);background:var(--signal-hero)}
+:root[data-palette="signal"] footer{border:0;background:var(--signal-hero);color:#f4f7ef}
+
+/* Side by Side becomes a floating analytical workbench. */
+:root[data-palette="signal"] .folio-topbar{margin:18px 0 0;padding:0 16px;border:1px solid var(--line-strong);border-radius:999px;background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:8px 8px 0 color-mix(in srgb,var(--primary) 14%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+:root[data-palette="signal"] .folio-intro{padding:54px 0 38px}
+:root[data-palette="signal"] .folio-intro h1{font-size:clamp(2.8rem,5vw,5.4rem)}
+:root[data-palette="signal"] .folio-arrange{border:1px dashed var(--line-strong);border-radius:var(--signal-detail);background:var(--surface-soft)}
+:root[data-palette="signal"] .folio-panels{--folio-list:29%;gap:20px}
+:root[data-palette="signal"] .folio-list-panel,:root[data-palette="signal"] .folio-detail-panel{position:relative;overflow:hidden;border:1px solid var(--line-strong);border-radius:var(--signal-radius);background:var(--surface);box-shadow:10px 10px 0 color-mix(in srgb,var(--ink) 7%,transparent)}
+:root[data-palette="signal"] .folio-list-panel>header,:root[data-palette="signal"] .folio-detail-panel>header{background:var(--surface-soft)}
+:root[data-palette="signal"] .folio-tool-row.active{background:var(--primary);color:var(--accent-text);box-shadow:none}
+:root[data-palette="signal"] .folio-detail-panel:after{content:"";position:absolute;right:-70px;top:-70px;width:180px;height:180px;border:34px solid color-mix(in srgb,var(--signal-blue) 14%,transparent);border-radius:50%;pointer-events:none}
+
+:root[data-palette="signal"][data-layout="compact"] .tool-directory{grid-template-columns:minmax(0,1fr);gap:12px}
+:root[data-palette="signal"][data-layout="compact"] .directory-card,:root[data-palette="signal"][data-layout="compact"] .directory-card:nth-child(n){grid-column:auto;grid-row:auto!important;min-height:0;padding:16px;transform:none}
+:root[data-palette="signal"][data-layout="compact"] .directory-card:after{font-size:3.5rem}
+
+@media(max-width:1180px){
+  :root[data-palette="signal"] .directory-card,:root[data-palette="signal"] .directory-card:nth-child(n){grid-column:span 6;min-height:290px}
+  :root[data-palette="signal"] .settings-list{grid-template-columns:minmax(0,1fr)}
+  :root[data-palette="signal"] .settings-card:nth-child(n){grid-column:auto}
+}
+@media(max-width:900px){
+  :root[data-palette="signal"] main{width:min(100% - 34px,1480px)}
+  :root[data-palette="signal"] .page-hero{min-height:310px;padding:44px 34px}
+  :root[data-palette="signal"] .matcher-card{width:calc(100% - 32px)}
+  :root[data-palette="signal"] .match-modes{grid-template-columns:repeat(2,max-content) 1fr}
+  :root[data-palette="signal"] .verified-label{grid-column:1/-1;justify-self:start;margin-left:0}
+  :root[data-palette="signal"] .how-section{grid-template-columns:1fr}
+}
+@media(max-width:800px){
+  :root[data-palette="signal"] .sidebar{inset:10px auto 10px 10px;width:min(300px,calc(100vw - 20px));transform:translateX(-110%)}
+  :root[data-palette="signal"] body.nav-open .sidebar{transform:translateX(0)}
+  :root[data-palette="signal"] .workspace{margin-left:0}
+  :root[data-palette="signal"] .mobile-header{border-bottom:1px solid var(--line-strong);background:color-mix(in srgb,var(--surface) 86%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+  :root[data-palette="signal"] .directory-card,:root[data-palette="signal"] .directory-card:nth-child(n){grid-column:1/-1;min-height:260px}
+  :root[data-palette="signal"] :is(.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article):nth-child(n){transform:none}
+  :root[data-palette="signal"] .folio-topbar{border-radius:var(--signal-detail)}
+  :root[data-palette="signal"] .folio-panels,:root[data-palette="signal"] .folio-panels.panels-swapped{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:560px){
+  :root[data-palette="signal"] main{width:min(100% - 22px,1480px);padding-top:11px}
+  :root[data-palette="signal"] .page-hero{align-items:flex-start;min-height:340px;padding:60px 22px 28px}
+  :root[data-palette="signal"] .page-hero:before{top:22px;left:22px;right:auto}
+  :root[data-palette="signal"] .page-hero:after{right:-180px}
+  :root[data-palette="signal"] .title-row{align-items:flex-start;flex-direction:column;gap:16px}
+  :root[data-palette="signal"] h1{font-size:clamp(2.7rem,15vw,4.6rem)}
+  :root[data-palette="signal"] .page-hero p{font-size:.82rem}
+  :root[data-palette="signal"] .hero-status{display:none}
+  :root[data-palette="signal"] .matcher-card{width:calc(100% - 14px);margin-top:-34px;padding:18px}
+  :root[data-palette="signal"] .matcher-heading{display:block}
+  :root[data-palette="signal"] .privacy-chip{display:inline-flex;margin-top:10px}
+  :root[data-palette="signal"] .task-composer{grid-template-columns:auto minmax(0,1fr)}
+  :root[data-palette="signal"] .match-button{grid-column:1/-1;justify-content:center}
+  :root[data-palette="signal"] .match-modes{display:flex;overflow-x:auto}
+  :root[data-palette="signal"] .directory-section{padding-top:58px}
+  :root[data-palette="signal"] .directory-title-row{align-items:flex-start;flex-direction:column}
+  :root[data-palette="signal"] .directory-toolbar{align-items:flex-start;flex-direction:column}
+  :root[data-palette="signal"] .directory-card,:root[data-palette="signal"] .directory-card:nth-child(n){min-height:0;padding:19px}
+  :root[data-palette="signal"] .how-section{padding:20px}
+}
+
 /* Fieldbook surface authority: outrank the shared theme groups without affecting any other palette. */
 :root[data-palette="navigator"] body :is(.directory-card,.primary-result,.alternative-card,.stack-card,.workflow-card,.use-case-card,.lesson-card,.resource-grid article,.settings-card,.settings-preview,.advanced-builder,.blueprint-panel,.compare-table-wrap,.empty-state,.update-list,.method-grid,.how-section,.folio-list-panel,.folio-detail-panel,.folio-arrange){border:2px solid var(--line-strong);border-radius:var(--field-radius)!important;background:var(--surface);box-shadow:var(--field-shadow)}
 :root[data-palette="navigator"] body .matcher-card{border:2px solid var(--line-strong);border-radius:var(--field-radius)!important;background:var(--ink);color:var(--surface);box-shadow:var(--field-shadow)}
