@@ -355,6 +355,7 @@ const folioVaultKey = "ai-scouter-folio-vault";
 let folioVaultUnlocked = sessionStorage.getItem(folioVaultKey) === "unlocked";
 const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
 let appearancePreferences = { ...appearanceDefaults };
+const syncAccountData = () => window.AIScouterAuth?.syncAppData();
 const isFolioPalette = (palette) => palette === "folio";
 const isLiquidPalette = (palette) => palette === "liquid";
 
@@ -699,6 +700,7 @@ function toggleSavedTool(toolId) {
   if (savedToolIds.has(toolId)) savedToolIds.delete(toolId);
   else savedToolIds.add(toolId);
   localStorage.setItem("ai-scouter-saved", JSON.stringify([...savedToolIds]));
+  syncAccountData();
   renderDirectory();
   renderSavedTools();
   renderFolioDashboard();
@@ -1019,7 +1021,10 @@ function applyAppearance({ save = true } = {}) {
   syncSettingsControls();
   renderFolioDashboard();
   renderSplitWorkspace();
-  if (save) localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
+  if (save) {
+    localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
+    syncAccountData();
+  }
 }
 
 function createBlueprint(values) {
@@ -1535,6 +1540,7 @@ blueprintOutput.addEventListener("click", async (event) => {
     try { saved = JSON.parse(localStorage.getItem("ai-scouter-blueprints") || "[]"); } catch { saved = []; }
     saved.unshift(blueprint);
     localStorage.setItem("ai-scouter-blueprints", JSON.stringify(saved.slice(0, 20)));
+    syncAccountData();
     showToast("Blueprint saved in this browser");
   }
   if (actionButton.dataset.blueprintAction === "copy") {
@@ -1549,5 +1555,17 @@ blueprintOutput.addEventListener("click", async (event) => {
 });
 
 window.addEventListener("hashchange", () => showPage(location.hash.slice(1) || "tools", false));
+window.addEventListener("ai-scouter-toast", (event) => showToast(event.detail || "Account updated"));
+window.addEventListener("ai-scouter-account-data", (event) => {
+  const data = event.detail || {};
+  if (data.preferences && typeof data.preferences === "object") {
+    const localImage = appearancePreferences.liquidBackgroundImage || "";
+    const localImageName = appearancePreferences.liquidBackgroundName || "";
+    appearancePreferences = { ...appearanceDefaults, ...data.preferences, liquidBackgroundImage: localImage, liquidBackgroundName: localImageName };
+  }
+  if (Array.isArray(data.savedTools)) savedToolIds = new Set(data.savedTools);
+  applyAppearance({ save: false });
+  renderDirectory(); renderSavedTools(); renderFolioDashboard(); renderSplitWorkspace(); applyDirectoryFilters();
+});
 applyAppearance({ save: false });
 showPage(location.hash.slice(1) || "tools", false);

@@ -6,12 +6,15 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 execFileSync(process.execPath, [path.join(root, "build.mjs")], { stdio: "inherit" });
 
-const required = ["index.html", "styles.css", "app.js", "favicon.svg", "site.webmanifest"];
+const required = ["index.html", "styles.css", "app.js", "auth.js", "favicon.svg", "site.webmanifest"];
 await Promise.all(required.map((file) => access(path.join(root, "dist", file))));
 
 const html = await readFile(path.join(root, "dist", "index.html"), "utf8");
 const css = await readFile(path.join(root, "dist", "styles.css"), "utf8");
 const js = await readFile(path.join(root, "dist", "app.js"), "utf8");
+const auth = await readFile(path.join(root, "dist", "auth.js"), "utf8");
+const server = await readFile(path.join(root, "scripts", "serve.mjs"), "utf8");
+const accountStore = await readFile(path.join(root, "scripts", "account-store.mjs"), "utf8");
 
 const assertions = [
   [html.includes('id="matcher-form"'), "matcher form is present"],
@@ -19,10 +22,10 @@ const assertions = [
   [html.includes('data-page="settings"'), "settings page is present"],
   [html.includes('data-page="advanced"'), "advanced workflow page is present"],
   [html.includes('id="folio-dashboard"'), "fixed Folio dashboard is present"],
-  [html.includes('styles.css?v=20261126b') && html.includes('app.js?v=20261126b'), "versioned assets are present"],
+  [html.includes('styles.css?v=20261126c') && html.includes('app.js?v=20261126c') && html.includes('auth.js?v=20261126c'), "versioned assets are present"],
   [html.includes('id="folio-background"'), "Folio background control is present"],
   [html.includes('data-reset-setting="folioAccent"'), "individual setting resets are present"],
-  [html.includes('localStorage.getItem("ai-scouter-preferences")') && html.indexOf('localStorage.getItem("ai-scouter-preferences")') < html.indexOf('styles.css?v=20261126b'), "saved appearance is applied before the stylesheet can paint"],
+  [html.includes('localStorage.getItem("ai-scouter-preferences")') && html.indexOf('localStorage.getItem("ai-scouter-preferences")') < html.indexOf('styles.css?v=20261126c'), "saved appearance is applied before the stylesheet can paint"],
   [html.includes('id="advanced-theme-form"') && html.includes('id="advanced-theme-vault"') && html.includes('data-palette-option="folio"'), "Folio is available only inside the protected advanced theme vault"],
   [html.includes('id="layout-grid"') && html.includes('data-layout-option="split"') && html.includes('data-layout-option="compact"'), "independent layout options are present"],
   [html.includes('id="hover-info-toggle"') && html.includes('data-reset-setting="moreInfo"'), "hover information preference is present and resettable"],
@@ -62,6 +65,12 @@ const assertions = [
   [html.includes('id="split-workbench"') && html.includes('id="split-tool-list"') && js.includes('renderSplitWorkspace'), "non-Folio Side-by-Side workbench is functional"],
   [js.includes('advancedThemePassword.value !== "SDE4t3am"') && js.includes('sessionStorage.setItem(folioVaultKey'), "advanced Folio access requires the requested session password"],
   [html.match(/Find the right AI\. Move with confidence\./g)?.length >= 4, "the same product slogan is used across the interface"],
+  [html.includes('id="account-auth-form"') && html.includes('id="account-settings-form"') && html.includes('id="account-delete-form"'), "complete account interface is present"],
+  [js.includes('ai-scouter-account-data') && js.includes('syncAccountData'), "account data hydrates and syncs app state"],
+  [css.includes('Account system: theme-aware identity') && css.includes('.account-card{'), "account interface is responsive and theme aware"],
+  [auth.includes('credentials: "same-origin"') && auth.includes('AIScouterAuth') && auth.includes('ai-scouter-account-data'), "account client uses secure same-origin sessions and data sync"],
+  [server.includes("HttpOnly; SameSite=Lax") && server.includes("accountsAvailable") && server.includes("configuration-required"), "account server uses protected cookies and prevents temporary production accounts"],
+  [accountStore.includes("scryptSync") && accountStore.includes("createHash(\"sha256\")") && accountStore.includes("createAccountStore(databaseUrl"), "passwords and session tokens are stored as one-way hashes in PostgreSQL"],
   [html.includes('data-palette-option="navigator"') && html.includes('<strong>Fieldbook</strong>') && css.includes('Fieldbook theme'), "Fieldbook sidebar theme is available"],
   [css.includes('Fieldbook responsive containment contract'), "Fieldbook responsive containment contract is present"],
   [html.includes('id="liquid-glass-range"') && js.includes('applyLiquidGlass'), "Liquid Glass intensity is adjustable"],

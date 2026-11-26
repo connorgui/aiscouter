@@ -103,8 +103,9 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261126b" />
-    <script src="/app.js?v=20261126b" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261126c" />
+    <script src="/app.js?v=20261126c" type="module"></script>
+    <script src="/auth.js?v=20261126c" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -136,6 +137,7 @@
           <a href="#settings" data-page-link="settings" class="nav-link"><span aria-hidden="true">⚙</span>Settings</a>
         </nav>
         <div class="sidebar-note"><span>A LITTLE CLARITY, EVERY DAY</span><strong>Good AI choices start with understanding.</strong><p>Compare the fit, strengths, and tradeoffs behind every recommendation.</p><a href="#how-it-works" data-page-link="tools">How matching works ↗</a></div>
+        <button class="account-trigger account-sidebar" type="button" aria-label="Sign in or open account menu"><span class="account-avatar" aria-hidden="true">S</span><span><b data-account-label>Sign in</b><small data-account-subtitle>Sync your saved tools</small></span><i aria-hidden="true">›</i></button>
         <button class="theme-label" id="theme-toggle" type="button" aria-label="Switch appearance"><span>◐</span> <b>System theme</b></button>
       </aside>
       <div class="sidebar-scrim" id="sidebar-scrim"></div>
@@ -143,7 +145,7 @@
       <div class="workspace">
         <header class="mobile-header">
           <a class="brand" href="#tools" data-page-link="tools" aria-label="AI Scouter home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>AI Scouter<span class="folio-brand-dot" aria-hidden="true"></span></strong></span></a>
-          <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+          <div class="mobile-actions"><button class="account-trigger account-mobile" type="button" aria-label="Sign in or open account menu"><span class="account-avatar" aria-hidden="true">S</span><b data-account-label>Sign in</b></button><button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div>
         </header>
 
         <main id="main-content">
@@ -156,7 +158,7 @@
               <p><i></i> AI tools · choose your task <b>ⓘ</b></p>
               <button type="button" id="folio-mode-toggle">☾ <span>Dark mode</span></button>
               <button type="button" data-go-page="saved">✦ <span>Saved</span></button>
-              <div class="folio-profile"><i>S</i><span><b>Local profile</b><small>Saved in this browser</small></span></div>
+              <button class="folio-profile account-trigger" type="button" aria-label="Sign in or open account menu"><span class="account-avatar" aria-hidden="true">S</span><span><b data-account-label>Sign in</b><small data-account-subtitle>Sync your workspace</small></span></button>
             </header>
             <div class="folio-intro">
               <div><span>FIND THE RIGHT AI. MOVE WITH CONFIDENCE.</span><h1>Discover AI tools with a clearer view<span class="folio-dot" aria-hidden="true"></span></h1><p>Find the right AI. Move with confidence.</p></div>
@@ -166,7 +168,7 @@
               <article><span>CATALOG COVERAGE</span><strong><b id="atlas-visible-count">17</b>/17</strong><small id="atlas-coverage-label">100% currently visible</small></article>
               <article><span>EVALUATION DEPTH</span><strong>6 dimensions</strong><small>Quality · fit · sources · speed</small></article>
               <article><span>ACTIVE PROFILE</span><strong id="atlas-active-tool">ChatGPT</strong><small id="atlas-active-type">Generalist</small></article>
-              <article><span>WATCHLIST SIGNAL</span><strong><b id="atlas-saved-count">0</b> saved</strong><small>Stored locally in this browser</small></article>
+              <article><span>WATCHLIST SIGNAL</span><strong><b id="atlas-saved-count">0</b> saved</strong><small data-sync-copy>Stored locally in this browser</small></article>
             </section>
             <section class="folio-discovery">
               <h2>Your next discovery</h2><p>Search the catalog and inspect what each tool does best.</p>
@@ -297,7 +299,7 @@
           </section>
 
           <section class="app-page inner-page" data-page="saved" aria-labelledby="saved-title">
-            <div class="inner-hero"><span class="section-kicker">MY LIBRARY</span><h1 id="saved-title">Saved AI tools.</h1><p>Your shortlist stays in this browser and can be changed anytime.</p></div>
+            <div class="inner-hero"><span class="section-kicker">MY LIBRARY</span><h1 id="saved-title">Saved AI tools.</h1><p data-sync-copy>Your shortlist stays in this browser and can be changed anytime.</p></div>
             <div class="tool-directory" id="saved-directory"></div>
             <div class="empty-state" id="saved-empty"><span>♡</span><h2>No saved tools yet</h2><p>Open AI Tools and use the bookmark button on any tool you want to keep.</p><button type="button" data-go-page="tools">Browse AI tools</button></div>
           </section>
@@ -326,7 +328,7 @@
           </section>
 
           <section class="app-page inner-page settings-page" data-page="settings" aria-labelledby="settings-title">
-            <div class="inner-hero"><span class="section-kicker">PERSONALIZE AI SCOUTER</span><h1 id="settings-title">Settings.</h1><p>Appearance preferences are saved only in this browser and apply immediately across every page.</p></div>
+            <div class="inner-hero"><span class="section-kicker">PERSONALIZE AI SCOUTER</span><h1 id="settings-title">Settings.</h1><p data-sync-copy>Appearance preferences are saved in this browser and apply immediately across every page.</p></div>
             <div class="settings-layout">
               <div class="settings-list">
                 <section class="settings-card"><div class="settings-card-head"><div><span>APPEARANCE</span><h2>Light and dark mode</h2><p>System follows your browser or operating-system preference automatically.</p></div><div class="setting-actions"><strong id="appearance-status">System</strong><button class="setting-reset" type="button" data-reset-setting="mode">Reset</button></div></div><div class="segmented-control" id="appearance-control" role="radiogroup" aria-label="Appearance mode"><label><input type="radio" name="appearance" value="system" checked /><span>◐ System</span></label><label><input type="radio" name="appearance" value="light" /><span>☼ Light</span></label><label><input type="radio" name="appearance" value="dark" /><span>☾ Dark</span></label></div></section>
@@ -397,6 +399,45 @@
       </div>
     </div>
     <dialog class="tool-dialog" id="tool-dialog"><button class="dialog-close" id="dialog-close" type="button" aria-label="Close tool details">×</button><div id="dialog-content"></div></dialog>
+    <div class="account-menu" id="account-menu" hidden><div class="account-menu-identity"><span class="account-avatar" aria-hidden="true">S</span><span><b id="account-menu-name">AI Scouter user</b><small>Workspace synced</small></span></div><button id="account-settings-button" type="button">Account Settings</button><button id="account-logout-button" class="account-danger-link" type="button">Log out</button></div>
+    <div class="account-modal" id="account-modal" hidden>
+      <button class="account-backdrop" type="button" aria-label="Close account dialog"></button>
+      <section class="account-card" role="dialog" aria-modal="true" aria-labelledby="account-title">
+        <button class="account-close" type="button" aria-label="Close account dialog">×</button>
+        <div class="account-art" aria-hidden="true"><span>AI SCOUTER ACCOUNT</span><strong>One workspace.<br />Every device.</strong><p>Keep your tools, themes, and workflow blueprints with you.</p><i></i></div>
+        <div class="account-panel">
+          <div id="account-auth-view">
+            <span class="account-eyebrow">YOUR WORKSPACE</span><h2 id="account-title">Welcome back.</h2><p id="account-copy">Sign in to sync your saved tools and appearance.</p>
+            <div class="account-tabs" role="tablist"><button type="button" data-auth-mode="signin" class="active" role="tab" aria-selected="true">Sign in</button><button type="button" data-auth-mode="signup" role="tab" aria-selected="false">Create account</button></div>
+            <form id="account-auth-form">
+              <label>Username<input id="account-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="24" required placeholder="your_username" /></label>
+              <label>Password<input id="account-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="72" required placeholder="At least 8 characters" /></label>
+              <div class="account-signup-fields" id="account-signup-fields" hidden><label>Display name<input id="account-display-name" type="text" maxlength="40" autocomplete="name" placeholder="How your name appears" /></label><label>Avatar color<input id="account-signup-color" type="color" value="#6677e8" /></label></div>
+              <label class="account-check"><input id="account-remember" type="checkbox" /><span>Remember me for 30 days</span></label>
+              <p class="account-message" id="account-auth-message" role="status" aria-live="polite"></p>
+              <button class="account-primary" type="submit"><span>Sign in</span><i>→</i></button>
+            </form>
+          </div>
+          <div id="account-settings-view" hidden>
+            <span class="account-eyebrow">ACCOUNT SETTINGS</span><h2>Your profile.</h2><p>Choose how you appear in AI Scouter.</p>
+            <form id="account-settings-form">
+              <div class="account-avatar-preview" id="account-avatar-preview"><span class="account-avatar account-avatar-large">S</span><div><b id="account-settings-username">username</b><small>Signed-in account</small></div></div>
+              <label>Display name<input id="account-settings-display-name" type="text" maxlength="40" autocomplete="name" /></label>
+              <fieldset class="avatar-modes"><legend>Profile picture</legend><div><button type="button" data-avatar-mode="initials" class="active">Initials</button><button type="button" data-avatar-mode="emoji">Emoji</button><button type="button" data-avatar-mode="photo">Photo</button></div></fieldset>
+              <div class="avatar-editor" data-avatar-panel="initials"><label>Initials<input id="account-avatar-initials" type="text" maxlength="2" /></label><label>Color<input id="account-avatar-color" type="color" value="#6677e8" /></label></div>
+              <div class="avatar-editor" data-avatar-panel="emoji" hidden><label>Emoji<input id="account-avatar-emoji" type="text" maxlength="12" value="✨" /></label></div>
+              <div class="avatar-editor" data-avatar-panel="photo" hidden><label>Upload image<input id="account-avatar-photo" type="file" accept="image/png,image/jpeg,image/webp,image/gif" /></label><small>PNG, JPEG, WebP, or GIF under 230 KB.</small></div>
+              <p class="account-message" id="account-settings-message" role="status" aria-live="polite"></p>
+              <div class="account-form-actions"><button class="account-primary" type="submit">Save changes</button><button id="account-delete-open" type="button" class="account-danger-button">Delete account</button></div>
+            </form>
+          </div>
+          <div id="account-delete-view" hidden>
+            <span class="account-eyebrow danger">DANGER ZONE</span><h2>Delete your account?</h2><p>This permanently removes your profile and synced AI Scouter data. Your current browser copy will remain available while signed out.</p>
+            <form id="account-delete-form"><label>Type DELETE<input id="account-delete-confirmation" type="text" autocomplete="off" spellcheck="false" placeholder="DELETE" required /></label><label>Current password<input id="account-delete-password" type="password" autocomplete="current-password" required /></label><p class="account-message" id="account-delete-message" role="status" aria-live="polite"></p><div class="account-form-actions"><button class="account-danger-button" type="submit">Permanently delete</button><button id="account-delete-cancel" type="button">Cancel</button></div></form>
+          </div>
+        </div>
+      </section>
+    </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
