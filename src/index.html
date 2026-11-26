@@ -103,8 +103,8 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261126a" />
-    <script src="/app.js?v=20261126a" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261126b" />
+    <script src="/app.js?v=20261126b" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -112,7 +112,7 @@
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-top">
-          <a class="brand" href="#tools" data-page-link="tools" aria-label="AI Scouter home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>AI Scouter<span class="folio-brand-dot" aria-hidden="true"></span></strong><small>Find your fit</small></span></a>
+          <a class="brand" href="#tools" data-page-link="tools" aria-label="AI Scouter home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>AI Scouter<span class="folio-brand-dot" aria-hidden="true"></span></strong><small>Find the right AI. Move with confidence.</small></span></a>
           <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Collapse sidebar" aria-expanded="true">◫</button>
           <button class="sidebar-close" id="sidebar-close" type="button" aria-label="Close navigation">×</button>
         </div>
@@ -159,7 +159,7 @@
               <div class="folio-profile"><i>S</i><span><b>Local profile</b><small>Saved in this browser</small></span></div>
             </header>
             <div class="folio-intro">
-              <div><span>THE RIGHT AI. LESS GUESSWORK.</span><h1>Discover AI tools with a clearer view<span class="folio-dot" aria-hidden="true"></span></h1><p>Compare capabilities. Build a practical stack. Keep your judgment in the loop.</p></div>
+              <div><span>FIND THE RIGHT AI. MOVE WITH CONFIDENCE.</span><h1>Discover AI tools with a clearer view<span class="folio-dot" aria-hidden="true"></span></h1><p>Find the right AI. Move with confidence.</p></div>
               <aside><span>YOUR AI COMPASS</span><p>One task at a time ↗</p></aside>
             </div>
             <section class="atlas-intel-strip" aria-label="AI tool intelligence summary">
@@ -181,8 +181,20 @@
             </div>
           </section>
           <section class="page-hero" id="top" aria-labelledby="page-title">
-            <div class="title-row"><div class="title-icon" aria-hidden="true">✦</div><div><span class="overline">AI TOOL DISCOVERY</span><h1 id="page-title">Discover AI Tools</h1><p>Personalized recommendations for <strong>your current task</strong>.</p></div></div>
+            <div class="title-row"><div class="title-icon" aria-hidden="true">✦</div><div><span class="overline">AI TOOL DISCOVERY</span><h1 id="page-title">Discover AI Tools</h1><p><strong>Find the right AI. Move with confidence.</strong></p></div></div>
             <div class="hero-status"><i></i><span>Matcher ready</span></div>
+          </section>
+
+          <section class="split-workbench" id="split-workbench" aria-labelledby="split-title">
+            <header class="split-workbench-head">
+              <div><span class="section-kicker">SIDE-BY-SIDE WORKSPACE</span><h2 id="split-title">Compare the fit, not just the features.</h2><p>Keep the catalog and a complete tool profile in view at the same time.</p></div>
+              <label class="split-search"><span aria-hidden="true">⌕</span><input id="split-search" type="search" placeholder="Search tools, tasks, or categories…" autocomplete="off" /></label>
+            </header>
+            <div class="split-filter-bar" id="split-filter-bar" aria-label="Filter Side-by-Side tools"><button class="active" type="button" data-split-filter="all">All tools</button><button type="button" data-split-filter="words">Words &amp; research</button><button type="button" data-split-filter="build">Coding &amp; automation</button><button type="button" data-split-filter="media">Creative media</button><span id="split-count">17 tools</span></div>
+            <div class="split-shell">
+              <section class="split-list-panel"><header><div><span>CATALOG</span><b>Choose a tool</b></div><i aria-hidden="true">17</i></header><div class="split-tool-list" id="split-tool-list"></div></section>
+              <section class="split-profile-panel" id="split-tool-detail" aria-live="polite"></section>
+            </div>
           </section>
 
           <section class="matcher-card" id="matcher" aria-labelledby="matcher-title">
@@ -321,7 +333,6 @@
                 <section class="settings-card"><div class="settings-card-head"><div><span>COLOR STYLE</span><h2>Choose a theme</h2><p>Each palette includes its own accessible accent-text pairing.</p></div><button class="setting-reset" type="button" data-reset-setting="palette">Reset</button></div><div class="theme-grid" id="theme-grid">
                   <button type="button" class="theme-option selected" data-palette-option="default" aria-pressed="true"><i class="theme-preview theme-default"><b></b><em></em><span></span></i><strong>Default</strong><small>Clean indigo</small></button>
                   <button type="button" class="theme-option" data-palette-option="navigator" aria-pressed="false"><i class="theme-preview theme-navigator"><b></b><em></em><span></span></i><strong>Fieldbook</strong><small>Editorial index</small></button>
-                  <button type="button" class="theme-option" data-palette-option="folio" aria-pressed="false"><i class="theme-preview theme-folio"><b></b><em></em><span></span></i><strong>Folio</strong><small>Folio Scouter</small></button>
                   <button type="button" class="theme-option" data-palette-option="deploy" aria-pressed="false"><i class="theme-preview theme-deploy"><b></b><em></em><span></span></i><strong>Deploy</strong><small>Midnight violet</small></button>
                   <button type="button" class="theme-option" data-palette-option="ocean" aria-pressed="false"><i class="theme-preview theme-ocean"><b></b><em></em><span></span></i><strong>Ocean</strong><small>Navy + aqua</small></button>
                   <button type="button" class="theme-option" data-palette-option="ember" aria-pressed="false"><i class="theme-preview theme-ember"><b></b><em></em><span></span></i><strong>Ember</strong><small>Warm charcoal</small></button>
@@ -330,7 +341,9 @@
                   <button type="button" class="theme-option" data-palette-option="liquid" aria-pressed="false"><i class="theme-preview theme-liquid"><b></b><em></em><span></span></i><strong>Liquid Glass</strong><small>macOS-inspired glass</small></button>
                   <button type="button" class="theme-option" data-palette-option="creations" aria-pressed="false"><i class="theme-preview theme-creations"><b></b><em></em><span></span></i><strong>CG Creations</strong><small>Digital playground</small></button>
                   <button type="button" class="theme-option" data-palette-option="signal" aria-pressed="false"><i class="theme-preview theme-signal"><b></b><em></em><span></span></i><strong>Signal</strong><small>Bento command deck</small></button>
+                  <button type="button" class="theme-option" data-palette-option="nova" aria-pressed="false"><i class="theme-preview theme-nova"><b></b><em></em><span></span></i><strong>Nova</strong><small>Spatial AI workspace</small></button>
                 </div></section>
+                <section class="settings-card advanced-theme-settings"><div class="settings-card-head"><div><span>ADVANCED THEMES</span><h2>Protected theme vault</h2><p>Specialized reference themes are kept behind a session-only password.</p></div><span class="vault-status" id="advanced-theme-status">Locked</span></div><form class="advanced-theme-lock" id="advanced-theme-form"><label for="advanced-theme-password">Password</label><div><input id="advanced-theme-password" type="password" autocomplete="off" spellcheck="false" placeholder="Enter advanced password" /><button type="submit">Unlock</button></div><p id="advanced-theme-message" role="status" aria-live="polite"></p></form><div class="advanced-theme-vault" id="advanced-theme-vault" hidden><button type="button" class="theme-option" data-palette-option="folio" aria-pressed="false"><i class="theme-preview theme-folio"><b></b><em></em><span></span></i><strong>Folio</strong><small>Protected reference theme</small></button><button class="vault-lock-button" id="advanced-theme-lock-button" type="button">Lock advanced themes</button></div></section>
                 <section class="settings-card"><div class="settings-card-head"><div><span>APP LAYOUT</span><h2>Choose how tools are arranged</h2><p>Layout is independent from color. Every theme can use every layout.</p></div><button class="setting-reset" type="button" data-reset-setting="layout">Reset</button></div><div class="layout-grid" id="layout-grid">
                   <button type="button" class="layout-option selected" data-layout-option="catalog" aria-pressed="true"><i class="layout-preview layout-catalog"><span></span><span></span><span></span></i><strong>Catalog</strong><small>Matcher + cards</small></button>
                   <button type="button" class="layout-option" data-layout-option="split" aria-pressed="false"><i class="layout-preview layout-split"><span></span><span></span><span></span></i><strong>Side by side</strong><small>List + tool profile</small></button>
@@ -375,12 +388,12 @@
                 <section class="settings-card compact-setting" id="type-settings"><div><span>TYPOGRAPHY</span><h2>Bold interface text</h2><p>Use stronger headings and controls, or choose a quieter weight.</p></div><div class="setting-control-row"><label class="switch-control"><input id="bold-toggle" type="checkbox" /><span><i></i></span><b id="bold-label">Regular</b></label><button class="setting-reset" type="button" data-reset-setting="bold">Reset</button></div></section>
                 <button class="reset-settings" id="reset-settings" type="button">Reset appearance settings</button>
               </div>
-              <aside class="settings-preview" aria-label="Theme preview"><div class="preview-window"><div class="preview-top"><i></i><i></i><i></i><span>AI Scouter</span></div><div class="preview-body"><small>LIVE PREVIEW</small><h2>Find the right AI.</h2><p>Your appearance settings update this preview and the full interface instantly.</p><div class="preview-search"><span>⌕</span><i></i></div><div class="preview-cards"><article><i></i><b></b><span></span></article><article><i></i><b></b><span></span></article></div><button type="button" data-go-page="tools">Explore tools</button></div></div></aside>
+              <aside class="settings-preview" aria-label="Theme preview"><div class="preview-window"><div class="preview-top"><i></i><i></i><i></i><span>AI Scouter</span></div><div class="preview-body"><small>LIVE PREVIEW</small><h2>Find the right AI. Move with confidence.</h2><p>Your appearance settings update this preview and the full interface instantly.</p><div class="preview-search"><span>⌕</span><i></i></div><div class="preview-cards"><article><i></i><b></b><span></span></article><article><i></i><b></b><span></span></article></div><button type="button" data-go-page="tools">Explore tools</button></div></div></aside>
             </div>
           </section>
         </main>
 
-        <footer><div><strong>AI Scouter</strong><p>Use the right tool. Keep your judgment.</p></div><small>Product capabilities and plans change quickly. Verify current features, pricing, and data policies before choosing or purchasing a tool.</small><a href="#tools" data-page-link="tools">Back home ↑</a><small class="folio-credit">Credits of the Folio theme go to Felix Koiviestoinen.</small></footer>
+        <footer><div><strong>AI Scouter</strong><p>Find the right AI. Move with confidence.</p></div><small>Product capabilities and plans change quickly. Verify current features, pricing, and data policies before choosing or purchasing a tool.</small><a href="#tools" data-page-link="tools">Back home ↑</a><small class="folio-credit">Credits of the Folio theme go to Felix Koiviestoinen.</small></footer>
       </div>
     </div>
     <dialog class="tool-dialog" id="tool-dialog"><button class="dialog-close" id="dialog-close" type="button" aria-label="Close tool details">×</button><div id="dialog-content"></div></dialog>

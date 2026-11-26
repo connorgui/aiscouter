@@ -327,6 +327,17 @@ const folioPanelRange = document.querySelector("#folio-panel-range");
 const folioPanelValue = document.querySelector("#folio-panel-value");
 const folioPanelDrag = document.querySelector("#folio-panel-drag");
 const folioModeToggle = document.querySelector("#folio-mode-toggle");
+const splitSearch = document.querySelector("#split-search");
+const splitFilterBar = document.querySelector("#split-filter-bar");
+const splitToolList = document.querySelector("#split-tool-list");
+const splitToolDetail = document.querySelector("#split-tool-detail");
+const splitCount = document.querySelector("#split-count");
+const advancedThemeForm = document.querySelector("#advanced-theme-form");
+const advancedThemePassword = document.querySelector("#advanced-theme-password");
+const advancedThemeMessage = document.querySelector("#advanced-theme-message");
+const advancedThemeVault = document.querySelector("#advanced-theme-vault");
+const advancedThemeStatus = document.querySelector("#advanced-theme-status");
+const advancedThemeLockButton = document.querySelector("#advanced-theme-lock-button");
 const atlasVisibleCount = document.querySelector("#atlas-visible-count");
 const atlasCoverageLabel = document.querySelector("#atlas-coverage-label");
 const atlasActiveTool = document.querySelector("#atlas-active-tool");
@@ -335,9 +346,13 @@ const atlasSavedCount = document.querySelector("#atlas-saved-count");
 const systemColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
 let activeDirectoryFilter = "all";
 let activeFolioFilter = "all";
+let activeSplitFilter = "all";
 let selectedFolioToolId = "chatgpt";
+let selectedSplitToolId = "chatgpt";
 let savedToolIds = new Set(JSON.parse(localStorage.getItem("ai-scouter-saved") || "[]"));
 let comparedToolIds = ["chatgpt", "claude"];
+const folioVaultKey = "ai-scouter-folio-vault";
+let folioVaultUnlocked = sessionStorage.getItem(folioVaultKey) === "unlocked";
 const appearanceDefaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
 let appearancePreferences = { ...appearanceDefaults };
 const isFolioPalette = (palette) => palette === "folio";
@@ -643,6 +658,43 @@ function renderFolioDashboard() {
     <a class="folio-visit" href="${tool.url}" target="_blank" rel="noopener noreferrer">Visit ${tool.name} <span>↗</span></a>`;
 }
 
+function renderSplitWorkspace() {
+  if (!splitToolList || !splitToolDetail) return;
+  const visibleTools = searchTools(splitSearch.value, activeSplitFilter);
+  if (!visibleTools.some((tool) => tool.id === selectedSplitToolId)) selectedSplitToolId = visibleTools[0]?.id || "";
+  splitCount.textContent = `${visibleTools.length} ${visibleTools.length === 1 ? "tool" : "tools"}`;
+  const countBadge = document.querySelector(".split-list-panel>header>i");
+  if (countBadge) countBadge.textContent = String(visibleTools.length);
+  splitToolList.innerHTML = visibleTools.length ? visibleTools.map((tool) => `
+    <button type="button" class="split-tool-row ${tool.id === selectedSplitToolId ? "active" : ""}" data-split-tool="${tool.id}">
+      <i style="--tool-color:${tool.color}">${tool.mark}</i>
+      <span><b>${tool.name}</b><small>${tool.type}</small></span>
+      <em>${Math.max(...Object.values(tool.categories)) * 9 + 7}%<small>fit</small></em>
+    </button>`).join("") : `<div class="split-empty"><b>No matching tools</b><span>Try a broader task or category.</span></div>`;
+
+  const tool = tools.find((item) => item.id === selectedSplitToolId);
+  if (!tool) {
+    splitToolDetail.innerHTML = `<div class="split-empty"><b>Select a tool to inspect it</b><span>Its fit, strengths, and tradeoffs will appear here.</span></div>`;
+    return;
+  }
+  const isSaved = savedToolIds.has(tool.id);
+  const fit = Math.max(...Object.values(tool.categories)) * 9 + 7;
+  splitToolDetail.innerHTML = `
+    <header class="split-profile-head"><span>IN FOCUS</span><div><button type="button" data-go-page="compare">Compare</button><button type="button" data-save="${tool.id}">${isSaved ? "♥ Saved" : "♡ Save"}</button></div></header>
+    <div class="split-profile-identity"><i style="--tool-color:${tool.color}">${tool.mark}</i><div><small>${tool.type}</small><h2>${tool.name}</h2><p>${escapeHtml(tool.tagline)}</p></div><strong>${fit}<small>% fit</small></strong></div>
+    <p class="split-profile-copy">${escapeHtml(tool.description)}</p>
+    <div class="split-profile-insights">${toolProfileInsightsMarkup(tool)}</div>
+    <footer class="split-profile-actions"><span>Review current features and policies on the official product site.</span><a href="${tool.url}" target="_blank" rel="noopener noreferrer">Visit ${tool.name}</a></footer>`;
+}
+
+function syncAdvancedThemeVault() {
+  advancedThemeForm.hidden = folioVaultUnlocked;
+  advancedThemeVault.hidden = !folioVaultUnlocked;
+  advancedThemeStatus.textContent = folioVaultUnlocked ? "Unlocked for this session" : "Locked";
+  advancedThemeMessage.textContent = "";
+  if (!folioVaultUnlocked) advancedThemePassword.value = "";
+}
+
 function toggleSavedTool(toolId) {
   if (savedToolIds.has(toolId)) savedToolIds.delete(toolId);
   else savedToolIds.add(toolId);
@@ -650,6 +702,7 @@ function toggleSavedTool(toolId) {
   renderDirectory();
   renderSavedTools();
   renderFolioDashboard();
+  renderSplitWorkspace();
   applyDirectoryFilters();
   const tool = tools.find((item) => item.id === toolId);
   showToast(savedToolIds.has(toolId) ? `${tool.name} saved` : `${tool.name} removed`);
@@ -923,6 +976,7 @@ function syncSettingsControls() {
     button.setAttribute("aria-pressed", String(selected));
   });
   liquidBackgroundClear.disabled = !uploadedBackground;
+  syncAdvancedThemeVault();
 }
 
 function applyAppearance({ save = true } = {}) {
@@ -964,6 +1018,7 @@ function applyAppearance({ save = true } = {}) {
   document.querySelector('meta[name="theme-color"]').setAttribute("content", getComputedStyle(root).getPropertyValue("--canvas").trim() || (effectiveMode === "dark" ? "#11141d" : "#f8f9fc"));
   syncSettingsControls();
   renderFolioDashboard();
+  renderSplitWorkspace();
   if (save) localStorage.setItem("ai-scouter-preferences", JSON.stringify(appearancePreferences));
 }
 
@@ -1214,6 +1269,35 @@ document.querySelector("#theme-grid").addEventListener("click", (event) => {
   applyAppearance();
 });
 
+advancedThemeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (advancedThemePassword.value !== "SDE4t3am") {
+    advancedThemeMessage.textContent = "That password is not correct.";
+    advancedThemePassword.select();
+    return;
+  }
+  folioVaultUnlocked = true;
+  sessionStorage.setItem(folioVaultKey, "unlocked");
+  syncAdvancedThemeVault();
+  showToast("Advanced themes unlocked for this session");
+});
+
+advancedThemeVault.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-palette-option]");
+  if (!button) return;
+  appearancePreferences.palette = button.dataset.paletteOption;
+  appearancePreferences.layout = "split";
+  applyAppearance();
+});
+
+advancedThemeLockButton.addEventListener("click", () => {
+  folioVaultUnlocked = false;
+  sessionStorage.removeItem(folioVaultKey);
+  syncAdvancedThemeVault();
+  advancedThemePassword.focus();
+  showToast("Advanced themes locked");
+});
+
 document.querySelector("#layout-grid").addEventListener("click", (event) => {
   const button = event.target.closest("[data-layout-option]");
   if (!button) return;
@@ -1305,6 +1389,28 @@ hoverInfoToggle.addEventListener("change", () => {
 });
 
 folioSearch.addEventListener("input", renderFolioDashboard);
+
+splitSearch.addEventListener("input", renderSplitWorkspace);
+
+splitFilterBar.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-split-filter]");
+  if (!button) return;
+  activeSplitFilter = button.dataset.splitFilter;
+  splitFilterBar.querySelectorAll("[data-split-filter]").forEach((item) => item.classList.toggle("active", item === button));
+  renderSplitWorkspace();
+});
+
+splitToolList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-split-tool]");
+  if (!button) return;
+  selectedSplitToolId = button.dataset.splitTool;
+  renderSplitWorkspace();
+});
+
+splitToolDetail.addEventListener("click", (event) => {
+  const saveButton = event.target.closest("[data-save]");
+  if (saveButton) toggleSavedTool(saveButton.dataset.save);
+});
 
 document.querySelector(".folio-filter-row").addEventListener("click", (event) => {
   const button = event.target.closest("[data-folio-filter]");
