@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Describe your task and let AI Scouter find the AI tool that fits it best." />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#dfeefa" />
     <meta property="og:title" content="AI Scouter — Find the right AI for the job" />
     <meta property="og:description" content="A fast, explainable AI tool matcher for real work." />
     <meta property="og:type" content="website" />
@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <script>
       (() => {
-        const defaults = { mode: "system", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
+        const defaults = { mode: "light", palette: "default", layout: "catalog", radius: 18, bold: false, moreInfo: false, folioAccent: "#afca7d", folioBackground: "#0f1711", folioLightBackground: "#f7f8f5", liquidGlass: 46, liquidBackground: "aurora", liquidBackgroundImage: "", liquidBackgroundName: "", liquidTint: "#5ab4ff", fieldbookVersion: 2, typographyVersion: 2 };
         let preferences = defaults;
         try {
           const stored = JSON.parse(localStorage.getItem("ai-scouter-preferences") || "{}");
@@ -103,9 +103,9 @@
         root.style.colorScheme = effectiveMode;
       })();
     </script>
-    <link rel="stylesheet" href="/styles.css?v=20261126c" />
-    <script src="/app.js?v=20261126c" type="module"></script>
-    <script src="/auth.js?v=20261126c" type="module"></script>
+    <link rel="stylesheet" href="/styles.css?v=20261127a" />
+    <script src="/app.js?v=20261127a" type="module"></script>
+    <script src="/auth.js?v=20261127a" type="module"></script>
     <title>AI Scouter — Find the right AI for the job</title>
   </head>
   <body>
@@ -138,7 +138,7 @@
         </nav>
         <div class="sidebar-note"><span>A LITTLE CLARITY, EVERY DAY</span><strong>Good AI choices start with understanding.</strong><p>Compare the fit, strengths, and tradeoffs behind every recommendation.</p><a href="#how-it-works" data-page-link="tools">How matching works ↗</a></div>
         <button class="account-trigger account-sidebar" type="button" aria-label="Sign in or open account menu"><span class="account-avatar" aria-hidden="true">S</span><span><b data-account-label>Sign in</b><small data-account-subtitle>Sync your saved tools</small></span><i aria-hidden="true">›</i></button>
-        <button class="theme-label" id="theme-toggle" type="button" aria-label="Switch appearance"><span>◐</span> <b>System theme</b></button>
+        <button class="theme-label" id="theme-toggle" type="button" aria-label="Switch appearance"><span>☼</span> <b>Light theme</b></button>
       </aside>
       <div class="sidebar-scrim" id="sidebar-scrim"></div>
 
@@ -181,6 +181,51 @@
               <section class="folio-detail-panel" id="folio-tool-detail" aria-live="polite"></section>
               <button class="folio-panel-drag" id="folio-panel-drag" type="button" aria-label="Drag to resize the tool list and profile panels" aria-valuemin="28" aria-valuemax="48" aria-valuenow="34" title="Drag to resize panels"><span aria-hidden="true"></span></button>
             </div>
+          </section>
+          <section class="standard-home" id="standard-home" aria-labelledby="standard-home-title">
+            <div class="standard-home-hero">
+              <div class="standard-home-atmosphere" aria-hidden="true">
+                <i class="standard-glow standard-glow-one"></i><i class="standard-glow standard-glow-two"></i><i class="standard-orbit standard-orbit-one"></i><i class="standard-orbit standard-orbit-two"></i><i class="standard-grid"></i>
+              </div>
+              <header class="standard-home-nav">
+                <a class="standard-home-brand" href="#standard-home" aria-label="AI Scouter welcome"><span class="standard-home-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>AI Scouter</strong><small>Choose with clarity</small></span></a>
+                <nav aria-label="Welcome page"><a href="#matcher">Matcher</a><a href="#directory">Directory</a><button type="button" data-go-page="stacks">Stacks</button><a href="#how-it-works">How it works</a></nav>
+              </header>
+              <div class="standard-home-content">
+                <div class="standard-home-copy">
+                  <span class="standard-home-kicker">A clearer way to choose AI</span>
+                  <h1 id="standard-home-title">Scout.<br />Compare.<br /><em>Choose.</em></h1>
+                  <p>Describe the work in front of you, inspect the tradeoffs that matter, and build a practical AI stack without the clutter.</p>
+                  <div class="standard-home-actions"><a class="standard-home-primary" href="#matcher">Scout your task</a><a class="standard-home-secondary" href="#directory">Browse tools</a></div>
+                  <div class="standard-home-proof" aria-label="AI Scouter highlights"><span><strong>17</strong><small>tools in the catalog</small></span><span><strong>6</strong><small>fit dimensions</small></span><span><strong>1</strong><small>workspace to sync</small></span></div>
+                </div>
+                <aside class="standard-launch-card" aria-labelledby="standard-launch-title">
+                  <div class="standard-launch-topline"><span>START HERE</span><i><b></b>Matcher ready</i></div>
+                  <h2 id="standard-launch-title">Where do you want to begin?</h2>
+                  <div class="standard-launch-options">
+                    <a href="#matcher"><span aria-hidden="true">01</span><b>Find my AI<small>Match a tool to your task</small></b><i aria-hidden="true">+</i></a>
+                    <a href="#directory"><span aria-hidden="true">02</span><b>Browse AI tools<small>Explore the full catalog</small></b><i aria-hidden="true">+</i></a>
+                    <button type="button" data-go-page="stacks"><span aria-hidden="true">03</span><b>Build a stack<small>Combine tools that work together</small></b><i aria-hidden="true">+</i></button>
+                  </div>
+                  <button class="standard-home-signin account-trigger" type="button"><span>Sign in to sync your workspace</span><b aria-hidden="true">+</b></button>
+                  <p>Recommendations are based on task fit, not sponsorships.</p>
+                </aside>
+              </div>
+              <a class="standard-home-scroll" href="#standard-paths"><span>EXPLORE THE WORKFLOW</span><i></i></a>
+            </div>
+            <div class="standard-home-marquee" aria-hidden="true"><div><span>Task first</span><i></i><span>Tradeoffs visible</span><i></i><span>Official links</span><i></i><span>Human stays in</span><i></i><span>Task first</span><i></i><span>Tradeoffs visible</span><i></i><span>Official links</span><i></i><span>Human stays in</span><i></i></div></div>
+            <section class="standard-home-paths" id="standard-paths" aria-labelledby="standard-paths-title">
+              <div class="standard-section-heading"><span>CHOOSE YOUR PATH</span><h2 id="standard-paths-title">From question to confident choice.</h2><p>Start with the part of the decision you need help with. Every path keeps the evidence and tradeoffs visible.</p></div>
+              <div class="standard-path-grid">
+                <a class="standard-path-card standard-path-scout" href="#matcher"><span>Match a task</span><h3>Scout the right starting point.</h3><p>Turn a plain-language goal into a ranked, explainable set of tools.</p><div aria-hidden="true"><i>Task</i><b>Best fit</b><i>Tradeoffs</i></div><strong>Open the matcher</strong></a>
+                <a class="standard-path-card standard-path-compare" href="#directory"><span>Explore the field</span><h3>See the catalog clearly.</h3><p>Search by product, task, or output and inspect what each tool does best.</p><div aria-hidden="true"><i>Research</i><i>Code</i><i>Media</i></div><strong>Browse the directory</strong></a>
+                <button class="standard-path-card standard-path-stack" type="button" data-go-page="stacks"><span>Build a workflow</span><h3>Combine focused tools.</h3><p>Use a researcher, maker, and reviewer instead of forcing one tool to do everything.</p><div aria-hidden="true"><i>Find</i><b>+</b><i>Make</i><b>+</b><i>Review</i></div><strong>Explore AI stacks</strong></button>
+              </div>
+            </section>
+            <section class="standard-home-spotlight" aria-labelledby="standard-spotlight-title">
+              <div class="standard-ai-visual" aria-hidden="true"><i class="standard-ai-ring standard-ai-ring-one"></i><i class="standard-ai-ring standard-ai-ring-two"></i><i class="standard-ai-ring standard-ai-ring-three"></i><b>AI</b><span class="standard-ai-chip standard-ai-chip-one">Strongest fit</span><span class="standard-ai-chip standard-ai-chip-two">Tradeoffs clear</span><span class="standard-ai-chip standard-ai-chip-three">Official source</span></div>
+              <div class="standard-spotlight-copy"><span>THE AI SCOUTER METHOD</span><h2 id="standard-spotlight-title">Ask. Compare. Move forward.</h2><p>AI Scouter weighs the task, the output, your priorities, budget, and privacy needs. You get a recommendation you can inspect instead of a black-box answer.</p><a href="#matcher">Try the matcher</a></div>
+            </section>
           </section>
           <section class="page-hero" id="top" aria-labelledby="page-title">
             <div class="title-row"><div class="title-icon" aria-hidden="true">✦</div><div><span class="overline">AI TOOL DISCOVERY</span><h1 id="page-title">Discover AI Tools</h1><p><strong>Find the right AI. Move with confidence.</strong></p></div></div>
@@ -331,7 +376,7 @@
             <div class="inner-hero"><span class="section-kicker">PERSONALIZE AI SCOUTER</span><h1 id="settings-title">Settings.</h1><p data-sync-copy>Appearance preferences are saved in this browser and apply immediately across every page.</p></div>
             <div class="settings-layout">
               <div class="settings-list">
-                <section class="settings-card"><div class="settings-card-head"><div><span>APPEARANCE</span><h2>Light and dark mode</h2><p>System follows your browser or operating-system preference automatically.</p></div><div class="setting-actions"><strong id="appearance-status">System</strong><button class="setting-reset" type="button" data-reset-setting="mode">Reset</button></div></div><div class="segmented-control" id="appearance-control" role="radiogroup" aria-label="Appearance mode"><label><input type="radio" name="appearance" value="system" checked /><span>◐ System</span></label><label><input type="radio" name="appearance" value="light" /><span>☼ Light</span></label><label><input type="radio" name="appearance" value="dark" /><span>☾ Dark</span></label></div></section>
+                <section class="settings-card"><div class="settings-card-head"><div><span>APPEARANCE</span><h2>Light and dark mode</h2><p>System follows your browser or operating-system preference automatically.</p></div><div class="setting-actions"><strong id="appearance-status">Light</strong><button class="setting-reset" type="button" data-reset-setting="mode">Reset</button></div></div><div class="segmented-control" id="appearance-control" role="radiogroup" aria-label="Appearance mode"><label><input type="radio" name="appearance" value="system" /><span>◐ System</span></label><label><input type="radio" name="appearance" value="light" checked /><span>☼ Light</span></label><label><input type="radio" name="appearance" value="dark" /><span>☾ Dark</span></label></div></section>
                 <section class="settings-card"><div class="settings-card-head"><div><span>COLOR STYLE</span><h2>Choose a theme</h2><p>Each palette includes its own accessible accent-text pairing.</p></div><button class="setting-reset" type="button" data-reset-setting="palette">Reset</button></div><div class="theme-grid" id="theme-grid">
                   <button type="button" class="theme-option selected" data-palette-option="default" aria-pressed="true"><i class="theme-preview theme-default"><b></b><em></em><span></span></i><strong>Default</strong><small>Clean indigo</small></button>
                   <button type="button" class="theme-option" data-palette-option="navigator" aria-pressed="false"><i class="theme-preview theme-navigator"><b></b><em></em><span></span></i><strong>Fieldbook</strong><small>Editorial index</small></button>
